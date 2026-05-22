@@ -566,9 +566,11 @@ linked_list.appendleft(5)
 ```python
 # Это чертеж одного "шпиона" или "подсказки"
 class ListNode:
-    def __init__(self, val: int = 0, next: 'ListNode' | None = None):
+    def __init__(self, val=0, next=None):
+    # def __init__(self, val: int = 0, next: 'ListNode' | None = None):
         self.val: int = val    # Данные (Секретное сообщение)
-        self.next: 'ListNode' | None = next  # Указатель (Карта к следующему шпиону)
+        self.next = next  # Указатель (Карта к следующему шпиону)
+        # self.next: 'ListNode' | None = next  # Указатель (Карта к следующему шпиону)
 
 # Создание небольшого списка: 1 -> 2 -> 3
 node1 = ListNode(1)
@@ -582,7 +584,7 @@ node2.next = node3 # node2 теперь указывает на node3
 # node3.next по умолчанию None, отмечая конец.
 head = node1 # Начало нашего списка
 ```
-*Примечание: Запись 'ListNode' | None означает, что в next может лежать либо следующий узел, либо ничего (None). Кавычки вокруг 'ListNode' нужны, так как класс еще находится в процессе описания.*
+*Запись с аннотацией: 'ListNode' | None означает, что в next может лежать либо следующий узел, либо ничего (None). Кавычки вокруг 'ListNode' нужны, так как класс еще находится в процессе описания.*
 
 ---
 
