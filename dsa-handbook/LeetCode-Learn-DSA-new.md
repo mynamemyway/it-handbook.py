@@ -1553,7 +1553,7 @@ def length_of_longest_substring(s):
 
 ---
 
-## Тема 11: Префиксные Суммы (Prefix Sums) +
+## Тема 11: Префиксные Суммы (Prefix Sums) ➕
 
 ### Концепция
 
