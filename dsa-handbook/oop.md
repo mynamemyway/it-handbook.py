@@ -103,4 +103,25 @@ head = node1
                           |
                        [ head ]
 ```
+
+*Также можно передавать ссылку на уже существующий объект прямо в момент его создания в круглых скобках:*
+
+```python
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+node1 = ListNode(10)
+node2 = ListNode(20)
+node3 = ListNode(30)
+
+node1.next = node2
+node2.next = node3
+
+head = node1
+
+dm = ListNode('fake', node1) # head уже есть, передаём ссылку на неё при создании
+```
+
 ---
