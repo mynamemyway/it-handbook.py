@@ -875,6 +875,29 @@ linked_list.appendleft(5)
 - Чего нет: у deque нет метода `.sort()`. Также нельзя делать срезы (например, `linked_list[1:3]`).
 - Уникальные быстрые методы: `.appendleft()`, `.popleft()` и `.rotate()`.
 
+```python
+from collections import deque
+
+d = deque([2, 3])
+d.appendleft(1)  # вставка в начало - d теперь: deque([1, 2, 3])
+
+---
+
+d = deque([10, 20, 30])
+first = d.popleft()  # удаление из начала - вернет 10, сама d станет: deque([20, 30])
+
+---
+
+d = deque([1, 2, 3, 4, 5])
+
+# Сдвиг на 1 вправо (последний элемент 5 становится первым)
+d.rotate(1)  # d теперь: deque([5, 1, 2, 3, 4])
+
+# Сдвиг на -2 влево
+d.rotate(-2) # d теперь: deque([2, 3, 4, 5, 1])
+```
+
+
 ---
 
 ### Стратегия LeetCode: "LRU Cache" 🧠
