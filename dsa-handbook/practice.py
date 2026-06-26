@@ -12,7 +12,7 @@ class DoublyLinkedList:
 node1 = DoublyLinkedList('A')
 node2 = DoublyLinkedList('B')
 node3 = DoublyLinkedList('C')
-dm = DoublyLinkedList(None)
+dm = DoublyLinkedList()
 
 # Create links for all nodes + init head
 dm.next = node1
