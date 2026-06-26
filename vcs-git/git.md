@@ -342,3 +342,11 @@ git reset --hard HEAD~1    # Жестко удалить последний ко
 * fix: resolve undefined logger crash (исправление бага)
 * docs: update setup steps in README (документация)
 * refactor: clean up structure in webhook logic (рефакторинг)
+
+## Мой подход - Conventional Commits с указанием Relative Path
+
+Чтобы видеть имя файла в заголовке, используйте префиксы (области видимости) из стандарта Conventional Commits:
+
+* refactor(elba_sync): fix undefined logger and remove unused imports
+* docs(readme): update relative paths for assets
+* feat(bulk_import): add validation for incoming organization data
