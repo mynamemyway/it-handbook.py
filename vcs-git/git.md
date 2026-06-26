@@ -345,8 +345,12 @@ git reset --hard HEAD~1    # Жестко удалить последний ко
 
 ## Мой подход - Conventional Commits с указанием Relative Path
 
-Чтобы видеть имя файла в заголовке, используйте префиксы (области видимости) из стандарта Conventional Commits:
+1. Чтобы видеть имя файла в заголовке, использовать префиксы (области видимости) из стандарта Conventional Commits
+2. Для каждого нового / исправленного файла отдельный коммит
+3. Формат: Conventional Commits с указанием модуля/файла (`type(scope): message`)
 
-* refactor(elba_sync): fix undefined logger and remove unused imports
-* docs(readme): update relative paths for assets
-* feat(bulk_import): add validation for incoming organization data
+## Примеры
+- Пример 1: `feat(api/auth): add JWT token refresh logic`
+- Пример 2: `docs(readme): update relative paths for assets`
+- Пример 3: `feat(bulk_import): add validation for incoming organization data`
+- Пример 4: `refactor(elba_sync): fix undefined logger and remove unused imports`
