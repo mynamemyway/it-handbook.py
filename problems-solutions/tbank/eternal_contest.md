@@ -13,8 +13,7 @@ a, b, c, d = [int(n) for n in input().split()]
 def get_amount(a, b, c, d):
     if d <= b:
         return a
-    else:
-        return a + ((d - b) * c)
+    return a + ((d - b) * c)
 
 print(get_amount(a, b, c, d))
 ```
