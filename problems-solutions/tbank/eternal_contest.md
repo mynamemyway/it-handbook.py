@@ -363,3 +363,97 @@ print(*res)
 **Замечания:**
 * В первом примере хотя бы один школьник будет дарить подарок сам себе. Одной заменой единый цикл не построить.
 * Во втором примере после изменения происходят передачи подарков: 1 → 2 → 3 → 1.
+
+```python
+n = int(input())
+# Сразу приводим к 1 индексу
+target_idx = [int(i) - 1 for i in input().split()]
+
+# Список счётчиков подарков под размер n
+gifts_count = [0] * n
+for target in target_idx:
+    gifts_count[target] += 1
+
+# Ищем школьников с 0 или 2 подарками
+zero_gifts = []
+double_gifts = []
+
+for idx, count in enumerate(gifts_count):
+    if count == 0:
+        zero_gifts.append(idx)
+    elif count == 2:
+        double_gifts.append(idx)
+
+# Функция проверки большого цикла
+def is_single_cycle(arr):
+    visited = [False] * n
+    curr = 0 # Начинаем с 0-го школьника
+
+    for _ in range(n):
+        if visited[curr]:
+            return False
+        visited[curr] = True
+        curr = arr[curr] # Переходим к его цели
+
+    # Цикл ок, если вернулись в начало и обошли всех n человек
+    return curr == 0 and all(visited)
+
+# КЕЙС 1: Ищем отклонение в количестве подарков
+if len(zero_gifts) == 1 and len(double_gifts) == 1:
+    target_zero = zero_gifts[0]
+    target_double = double_gifts[0]
+
+    # Ищем индексы тех, кто сейчас дарит подарки человеку target_double
+    givers = []
+    for idx, target in enumerate(target_idx):
+        if target == target_double:
+            givers.append(idx)
+
+    # Перенаправляем первого дарителя на target_zero
+    test_idx = target_idx.copy()
+    test_idx[givers[0]] = target_zero
+
+    if is_single_cycle(test_idx):
+        # Приводим к 1-индексации при выводе (+1)
+        print(givers[0] + 1, target_zero + 1)
+    else:
+        # Если первый не подошёл, значит подойдёт второй
+        test_idx = target_idx.copy()
+        test_idx[givers[1]] = target_zero
+        if is_single_cycle(test_idx):
+            print(givers[1] + 1, target_zero + 1)
+        else:
+            print(-1, -1)
+
+# КЕЙС 2: У всех по 1 подарку, но не один циклический список
+elif len(zero_gifts) == 0 and len(double_gifts) == 0:
+    if is_single_cycle(target_idx):
+        print(-1, -1)
+    else:
+        # Ищем того, кто дарит подарок сам себе (индекс равен значению)
+        self_giver = -1
+        for idx, target in enumerate(target_idx):
+            if idx == target:
+                self_giver = idx
+                break
+
+        if self_giver == -1:
+            print(-1, -1)
+        else:
+            # Брутфорсим новую цель для одиночки
+            solved = False
+            for target_y in range(n):
+                if target_y != self_giver:
+                    test_idx = target_idx.copy()
+                    test_idx[self_giver] = target_y
+                    if is_single_cycle(test_idx):
+                        print(self_giver + 1, target_y + 1)
+                        solved = True
+                        break
+            if not solved:
+                print(-1, -1)
+
+# КЕЙС 3: Одной заменой не решить
+else:
+    print(-1, -1)
+```
