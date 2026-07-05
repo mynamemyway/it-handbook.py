@@ -82,8 +82,8 @@ Python, FastAPI, Uvicorn, SQLAlchemy, PostgreSQL, SQLite, Alembic, Pydantic, Pyt
 ## 4. Раздел «Курсы / Дополнительное образование»:
 
 - 2026 — DSA, LeetCode Handbook
-- 2026 — Информационная безопасность и Git, Академия Selectel
 - 2026 — Тренажер по SQL, Stepik
+- 2026 — Информационная безопасность и Git, Академия Selectel
 - 2025 — Курс «Поколение Python» (Продвинутый уровень), Stepik
 - 2025 — Курс «Поколение Python» (Базовый уровень), Stepik
 - 2025 - Основы QA тестирования, аналитики и разработки, Яндекс
