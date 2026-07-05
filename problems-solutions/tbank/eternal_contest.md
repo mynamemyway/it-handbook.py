@@ -494,53 +494,43 @@ else:
 Для читаемости условий входные данные в примере даются с меньшим количеством десятичных знаков. В реальных тестовых данных числа будут вещественными с точностью до 5 знаков после запятой.
 
 ```python
-# Паттерн: Бинарный поиск по ответу в 2D (Binary Search on 2D Space) / Билинейная интерполяция
-# Почему: Позволяет сужать рамки поиска точки пересечения систем координат без явного решения систем уравнений.
-# Сложность: По времени O(log(1/точность)), по памяти O(1)
+# Паттерн: Математическое моделирование (Analytical Geometry)
+# Почему: Разбор дает точные формулы неподвижной точки через параметры аффинного преобразования.
+# Сложность: По времени O(1), по памяти O(1)
+
+import math
 
 room_x, room_y = [float(i) for i in input().split()]
-
 coords = [float(i) for i in input().split()]
-# Разделение координат углов плана на отдельные составляющие x и y
-p00_x, p00_y = coords[0], coords[1]
+
+# Координаты ключевых углов плана
+p00_x, p00_y = coords[0], coords[1]  # Точка (x, y) из разбора
 px0_x, px0_y = coords[2], coords[3]
-pxy_x, pxy_y = coords[4], coords[5]
-p0y_x, p0y_y = coords[6], coords[7]
 
-# Функция для вычисления физических координат точки на плане
-def get_plan_coords(rx, ry):
-    kx = rx / room_x
-    ky = ry / room_y
+# Нахождение параметров k и phi по первой стороне (от 0,0 до room_x,0)
+dx = px0_x - p00_x
+dy = px0_y - p00_y
+plan_side_len = math.sqrt(dx*dx + dy*dy)
 
-    # Раздельный расчёт для осей x и y с использованием координат углов плана
-    x = (1 - kx) * (1 - ky) * p00_x + kx * (1 - ky) * px0_x + kx * ky * pxy_x + (1 - kx) * ky * p0y_x
-    y = (1 - kx) * (1 - ky) * p00_y + kx * (1 - ky) * px0_y + kx * ky * pxy_y + (1 - kx) * ky * p0y_y
+k = plan_side_len / room_x
+phi = math.atan2(dy, dx)
 
-    return x, y
+# Реализация формул строго по разбору со скриншота
+# Переменные x и y из разбора — это координаты p00 плана
+x = p00_x
+y = p00_y
 
-# Границы области поиска в реальной комнате
-x_min, x_max = 0.0, room_x
-y_min, y_max = 0.0, room_y
+# Формула для X
+num_x = x + k * y * math.sin(phi)
+den_x = 1.0 - k * math.cos(phi)
+res_x = num_x / den_x
 
-# Итерационное деление площади для достижения необходимой точности
-for _ in range(100):
-    mid_x = (x_min + x_max) / 2
-    mid_y = (y_min + y_max) / 2
+# Формула для Y
+num_y = y - k * (num_x / den_x) * math.cos(phi)
+den_y = 1.0 - k * math.sin(phi)
+res_y = num_y / den_y
 
-    plan_x, plan_y = get_plan_coords(mid_x, mid_y)
-
-    if plan_x > mid_x:
-        x_min = mid_x
-    else:
-        x_max = mid_x
-
-    if plan_y > mid_y:
-        y_min = mid_y
-    else:
-        y_max = mid_y
-
-print(f"{x_min:.5f} {y_min:.5f}")
-
+print(f"{res_x:.5f} {res_y:.5f}")
 ```
 
 ---
