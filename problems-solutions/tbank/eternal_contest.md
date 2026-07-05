@@ -380,22 +380,19 @@ print(*res)
 * Во втором примере после изменения происходят передачи подарков: 1 → 2 → 3 → 1.
 
 ```python
-# Алгоритм: Графы / Проверка цикла (Cycle Detection)
+# Паттерны: Частотный массив (Frequency Map), Обход графа / Проверка цикла (Cycle Detection)
 # Почему: Сложность O(N). Проверяем степени входа узлов и ищем один большой цикл.
-# Рекомендация: В Кейсе 2 (у всех по 1 подарку) решение невозможно, так как
-# изменение одного ребра в перестановке всегда ломает структуру перестановки.
-# Брутфорс O(N^2) здесь лишний и приведет к TLE при N=10^5.
+# Сложность: O(N) по времени и O(N) по памяти
 
 n = int(input())
-# Сразу приводим к 1 индексу
 target_idx = [int(i) - 1 for i in input().split()]
 
-# Список счётчиков подарков под размер n
+# 1. Строим частотный массив (считаем входящие подарки)
 gifts_count = [0] * n
 for target in target_idx:
     gifts_count[target] += 1
 
-# Ищем школьников с 0 или 2 подарками
+# 2. Ищем отклонения степеней входа
 zero_gifts = []
 double_gifts = []
 
@@ -405,40 +402,35 @@ for idx, count in enumerate(gifts_count):
     elif count == 2:
         double_gifts.append(idx)
 
-# Функция проверки большого цикла
+# Функция проверки единого цикла за O(N)
 def is_single_cycle(arr):
     visited = [False] * n
-    curr = 0 # Начинаем с 0-го школьника
-
+    curr = 0
     for _ in range(n):
         if visited[curr]:
             return False
         visited[curr] = True
-        curr = arr[curr] # Переходим к его цели
-
-    # Цикл ок, если вернулись в начало и обошли всех n человек
+        curr = arr[curr]
     return curr == 0 and all(visited)
 
-# КЕЙС 1: Ищем отклонение в количестве подарков
+# КЕЙС 1: Дисбаланс подарков (один лишний, одного не хватает)
 if len(zero_gifts) == 1 and len(double_gifts) == 1:
     target_zero = zero_gifts[0]
     target_double = double_gifts[0]
 
-    # Ищем индексы тех, кто сейчас дарит подарки человеку target_double
+    # Ищем двух дарителей, которые указывают на target_double
     givers = []
     for idx, target in enumerate(target_idx):
         if target == target_double:
             givers.append(idx)
 
-    # Перенаправляем первого дарителя на target_zero
+    # Проверяем первого дарителя
     test_idx = target_idx.copy()
     test_idx[givers[0]] = target_zero
-
     if is_single_cycle(test_idx):
-        # Приводим к 1-индексации при выводе (+1)
         print(givers[0] + 1, target_zero + 1)
     else:
-        # Если первый не подошёл, значит подойдёт второй
+        # Если первый не подошёл, проверяем второго дарителя
         test_idx = target_idx.copy()
         test_idx[givers[1]] = target_zero
         if is_single_cycle(test_idx):
@@ -446,35 +438,13 @@ if len(zero_gifts) == 1 and len(double_gifts) == 1:
         else:
             print(-1, -1)
 
-# КЕЙС 2: У всех по 1 подарку, но не один циклический список
+# КЕЙС 2: Все получают по 1 подарку
 elif len(zero_gifts) == 0 and len(double_gifts) == 0:
-    if is_single_cycle(target_idx):
-        print(-1, -1)
-    else:
-        # Ищем того, кто дарит подарок сам себе (индекс равен значению)
-        self_giver = -1
-        for idx, target in enumerate(target_idx):
-            if idx == target:
-                self_giver = idx
-                break
+    # Одной заменой изменить конфигурацию нескольких кругов невозможно, 
+    # так как переключение одного ребра всегда создаёт дисбаланс (0 и 2).
+    print(-1, -1)
 
-        if self_giver == -1:
-            print(-1, -1)
-        else:
-            # Брутфорсим новую цель для одиночки
-            solved = False
-            for target_y in range(n):
-                if target_y != self_giver:
-                    test_idx = target_idx.copy()
-                    test_idx[self_giver] = target_y
-                    if is_single_cycle(test_idx):
-                        print(self_giver + 1, target_y + 1)
-                        solved = True
-                        break
-            if not solved:
-                print(-1, -1)
-
-# КЕЙС 3: Одной заменой не решить
+# КЕЙС 3: Слишком много аномалий, одной заменой не исправить
 else:
     print(-1, -1)
 ```
