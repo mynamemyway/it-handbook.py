@@ -644,3 +644,37 @@ num2 = D('1.4') * D('2.58')
 print(num1)
 print(num2)
 ```
+
+---
+
+### Exercises
+
+1. Вам доступна строка s, в которой хранятся Decimal числа, разделенные символом пробела. Напишите программу, которая выводит на первой строке сумму всех чисел, а на второй строке 5 самых больших чисел в порядке убывания, разделенных символом пробела.
+
+```python
+from decimal import Decimal as D
+
+s = '12.3 1.8 3.6 -1.2 0.5 -14.2 86.5 10.3'
+l = [D(num) for num in s.split()]
+
+print(sum(l))
+print(*sorted(l, reverse=True)[:5])
+```
+```text
+99.6
+86.5 12.3 10.3 3.6 1.8
+```
+
+2. На вход программе подается Decimal число d. Напишите программу, которая вычисляет сумму наибольшей и наименьшей цифры числа d.
+
+```python
+from decimal import Decimal as D
+
+d = D(input())
+
+dig = d.as_tuple().digits
+sum_digits = min(dig) + max(dig)
+res = sum_digits - 1 if -1 < d < 1 else sum_digits
+
+print(res)
+```
