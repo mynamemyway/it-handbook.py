@@ -1284,3 +1284,4 @@ terms = [F(1 , Fac(i + 1)) for i in range(n)]
 
 print(sum(terms))
 ```
+d
