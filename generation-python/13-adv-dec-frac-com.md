@@ -1155,6 +1155,38 @@ terms = [F(1 , Fac(i + 1)) for i in range(n)]
 print(sum(terms))
 ```
 
+3. Упорядоченные дроби
+На вход программе подается натуральное число n. Напишите программу, которая выводит в порядке возрастания все несократимые дроби, заключенные между 0 и 1, знаменатель которых не превосходит n.
+
+```py
+import time
+from fractions import Fraction as F
+
+def timer(func):
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        result = func(*args, **kwargs)
+        end = time.perf_counter()
+        print(f"\n⏱️  Функция [{func.__name__}] выполнилась за {end - start:.6f} сек.")
+        return result
+    return wrapper
+
+# Раскомментровать для запуска декоратора (таймер выполнения)
+# @timer
+def all_fractal_nums(n):
+    nums = set()
+    for i in range(1, n):
+        for j in range(1, n + 1):
+            num = F(i, j)
+            if num < 1:
+                nums.add(num)
+    nums = sorted(nums)
+    print(*nums, sep='\n')
+
+# Запуск
+all_fractal_nums(int(input()))
+```
+
 ---
 
 ### Глоссарий
