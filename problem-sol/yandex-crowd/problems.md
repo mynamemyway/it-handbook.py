@@ -10,8 +10,6 @@ def sort_by_digit_sum(nums: list[int]) -> list[int]:
     Сложность по времени: O(N * log N * K)
     N — количество чисел в массиве
     K — макс. количество цифр в числе
-    
-    Сложность по памяти: O(N) для Timsort
     """
     return sorted(nums, key=lambda x: sum(int(dig) for dig in str(abs(x))))
 ```
@@ -27,7 +25,6 @@ def two_minimal_integers(nums: list[int]) -> list[int]:
     Находит два целых числа в массиве с наименьшей суммой.
 
     Сложность по времени: O(n log 2) -> эквивалентно O(n).
-    Сложность по памяти: O(1) — хранятся только 2 элемента.
     """
     # Функция nsmallest выбирает k наименьших элементов за один проход
     return heapq.nsmallest(2, nums)
