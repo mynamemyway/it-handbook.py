@@ -339,3 +339,32 @@ print(append(1))
 ## Примечания:
 1. При создании функции используйте параметры по умолчанию.
 2. Вызывать функцию matrix() не нужно, требуется только реализовать ее.
+
+Решение 1
+```py
+# n - строки
+# m - столбцы
+# value - значение
+
+def matrix(n=1, m=None, value=0):
+    matrix = []
+    if m == None:
+        m = n
+    for _ in range(n):
+        temp = []
+        matrix.append(temp)
+        for _ in range(m):
+            temp.append(value)
+    return matrix
+
+
+print(matrix(3, 1))
+```
+
+Решение 2
+```py
+def matrix(n=1, m=None, value=0):
+    if m is None:
+        m = n
+    return [[value for _ in range(m)] for _ in range(n)]
+```
