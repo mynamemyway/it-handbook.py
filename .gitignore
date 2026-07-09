@@ -1,11 +1,12 @@
-# Ignore
-lessons/
+# System
 .vscode/
 .pytest_cache
-
-temp.md
-.DS_Store
-/4me
-/archive
-temp.py
 __pycache__/
+.DS_Store
+
+# For me
+*me
+*me.*
+*temp
+*temp.*
+*archive
