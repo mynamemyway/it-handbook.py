@@ -886,3 +886,41 @@ super_func(5, 15, 20, 30)
 super_func(5, 15, 20, 30, c=77, x="Я в kwargs", y=100)
 # Напечатает: a=5, b=15, args=(20, 30), c=77, kwargs={'x': 'Я в kwargs', 'y': 100}
 ```
+
+---
+
+### Задачи
+
+2. 
+```py
+def sq_sum(*args: object) -> int | float:
+    """
+    Принимает произвольное количество числовых аргументов
+    Возвращает сумму их квадратов
+    """
+    # Генератор вместо создания списка для экономии памяти
+    return sum(n**2 for n in args)
+
+
+# Тестовые данные
+print(sq_sum(1, 2, 3))
+# Выводит: 14
+```
+
+3.
+```py
+def mean(*args) -> float:
+    """
+    Принимает массив произвольных элементов
+    Возвращает avg для элементов int и float
+    """
+    nums = [n for n in args if type(n) in (int, float)]
+    if not nums:
+        return 0.0
+    return sum(nums) / len(nums)
+
+
+# Тестовые данные
+print(mean(1.5, True, ['stepik'], 'beegeek', 2.5, (1, 2)))
+# Выводит: 2.0
+```
