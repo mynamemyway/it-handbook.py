@@ -960,3 +960,43 @@ def print_products(*args: object) -> None:
 
 print_products('Бананы', [1, 2], ('Stepik',), 'Яблоки', '', 'Макароны', 5, True)
 ```
+
+6.
+```py
+def info_kwargs(**kwargs: object) -> None:
+    """
+    Принимает произвольное количество именнованных аргументов
+    Печатает именованные аргументы в следующем формате:
+        <имя аргумента>: <значение аргумента>
+    *В алфавитном порядке по именам
+    """
+    # Используем генератор для экономии памяти
+    print(*(f'{key}: {value}' for key, value in sorted(kwargs.items())), sep='\n')
+
+
+info_kwargs(first_name='Timur', last_name='Guev', age=28, job='teacher')
+
+# age: 28
+# first_name: Timur
+# job: teacher
+# last_name: Guev
+```
+
+```py
+# Если выкинуть items и отсортировать словарь по умолчанию,
+# снижается производительность из-за обращения по i на каждой итерации
+print(*(f'{i}: {kwargs[i]}' for i in sorted(kwargs)), sep='\n')
+```
+
+Самый чистый вариант:
+```py
+def info_kwargs(**kwargs: object) -> None:
+    """
+    Принимает произвольное количество именнованных аргументов
+    Печатает именованные аргументы в следующем формате:
+        <имя аргумента>: <значение аргумента>
+    *В алфавитном порядке по именам
+    """
+    for key, val in sorted(kwargs.items()):
+        print(f'{key}: {val}')
+```
