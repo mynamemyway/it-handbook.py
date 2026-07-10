@@ -924,3 +924,18 @@ def mean(*args) -> float:
 print(mean(1.5, True, ['stepik'], 'beegeek', 2.5, (1, 2)))
 # Выводит: 2.0
 ```
+
+4.
+```py
+def greet(name: str, *args: str) -> str:
+    """
+    Принимает произвольное количество строк-имен.
+    Возвращает приветствие в соответствии с тестовыми данными.
+    """
+    return f"Hello, {' and '.join([name, *args])}!"
+
+
+# Тестовые данные
+print(greet('Timur', 'Roman', 'Ruslan'))
+# Выводит: Hello, Timur and Roman and Ruslan!
+```
