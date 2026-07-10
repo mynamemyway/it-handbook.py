@@ -939,3 +939,24 @@ def greet(name: str, *args: str) -> str:
 print(greet('Timur', 'Roman', 'Ruslan'))
 # Выводит: Hello, Timur and Roman and Ruslan!
 ```
+
+5.
+```py
+def print_products(*args: object) -> None:
+    """
+    Принимает произвольное количество аргументов
+    Выводит:
+        - <номер продукта>) <название продукта>
+        - "Нет продуктов"
+    * Нумерация продуктов начинается с единицы
+    """
+    products = [p for p in args if (type(p) is str and p)]
+
+    if not products:
+        print('Нет продуктов')
+        return
+    # Используем генератор для экономии памяти
+    print(*(f'{i}) {p}' for i, p in enumerate(products, 1)), sep='\n')
+
+print_products('Бананы', [1, 2], ('Stepik',), 'Яблоки', '', 'Макароны', 5, True)
+```
