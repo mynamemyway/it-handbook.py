@@ -1740,9 +1740,85 @@ print(get_min_path(points))
 print(sorted(numbers, key=lambda x: min(x) + max(x)))
 ```
 
-4.
+4. Напишите программу сортировки списка спортсменов по указанному полю:
+
+1: по имени;
+2: по возрасту;
+3: по росту;
+4: по весу.
+
+```python
+athletes = [('Дима', 10, 130, 35), ('Тимур', 11, 135, 39), ('Руслан', 9, 140, 33), ('Рустам', 10, 128, 30), ('Амир', 16, 170, 70), ('Рома', 16, 188, 100), ('Матвей', 17, 168, 68), ('Петя', 15, 190, 90)]
+
+# def sort_by_param(athlet):
+#     return athletes[param]
+
+param = int(input()) - 1
+
+for athlet in sorted(athletes, key=lambda x: x[param]):
+    print(*athlet)
+```
+
+5. Математические функции
+Напишите программу, которая принимает число и название функции, а выводит результат применения функции к данному числу.
+
+**Список возможных функций:**
+* **квадрат:** функция принимает число и возвращает его квадрат;
+* **куб:** функция принимает число и возвращает его куб;
+* **корень:** функция принимает число и возвращает корень квадратный из этого числа;
+* **модуль:** функция принимает число и возвращает его модуль;
+* **синус:** функция принимает число (в радианах) и возвращает синус этого числа.
+
+Решение 1
+```python
+from math import sin
+
+n = int(input())
+f_key = input()
+
+def apply_function(f, x):
+    functions = {'квадрат': x**2, 'куб': x**3, 'корень': x**0.5, 'модуль': abs(x), 'синус': sin(x)}
+    return functions[f]
 
 
+print(apply_function(f_key, n))
+```
+
+Решение 2 (лямбда)
+```python
+from math import sin
+
+n = int(input())
+f_key = input()
+
+function = {
+    'квадрат': lambda x: x**2,
+    'куб': lambda x: x**3,
+    'корень': lambda x: x**0.5,
+    'модуль': lambda x: abs(x),
+    'синус': lambda x: sin(x)
+}
+
+print(function[f_key](n))
+```
+
+Решение 3 (вложенная функция)
+```python
+import math
+
+def pwr(p):
+  def numpower(n):
+    return n**p
+  return numpower
+
+commands = {"квадрат": pwr(2), "куб": pwr(3), "корень": pwr(0.5), "модуль": abs, "синус": math.sin}
+
+n = int(input())
+command = input()
+
+
+print(commands[command](n))
+```
 
 ---
 
