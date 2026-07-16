@@ -306,3 +306,57 @@ def all_fractal_nums(n):
 # Запуск
 all_fractal_nums(int(input("Введите число: ")))
 ```
+
+#### Декоратор для замера 2.0
+
+```python
+import time
+import tracemalloc
+
+
+def profile_resources(func):
+    """Декоратор для замера физического времени и оперативной памяти."""
+
+    def wrapper(*args, **kwargs):
+        # 1. Включаем мониторинг памяти и фиксируем время старта
+        tracemalloc.start()
+        start_time = time.perf_counter()
+
+        # 2. Запускаем саму тестируемые функцию
+        result = func(*args, **kwargs)
+
+        # 3. Фиксируем время окончания и собираем статистику памяти
+        end_time = time.perf_counter()
+        current_mem, peak_mem = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+
+        # 4. Переводим данные в понятный вид
+        execution_time = end_time - start_time
+        peak_mem_kb = peak_mem / 1024  # Переводим байты в Килобайты
+
+        # 5. Выводим результаты в консоль
+        print(f"\n[Профиль функции '{func.__name__}']")
+        print(f"⌛ Время выполнения: {execution_time:.6f} сек.")
+        print(f"💾 Пиковое потребление памяти: {peak_mem_kb:.2f} КБ")
+
+        return result
+
+    return wrapper
+
+
+# --- ПРИМЕР ИСПОЛЬЗОВАНИЯ ---
+
+
+# Навешиваем декоратор через @ на любую функцию
+@profile_resources
+def test_sorting():
+    """Тестовая функция: создает большой список и сортирует его."""
+    # Создаем список из 100 000 чисел (пространственная нагрузка)
+    nums = [int(x) for x in range(100000, 0, -1)]
+    # Сортируем его (временная нагрузка)
+    nums.sort()
+
+
+# Запускаем функцию как обычно
+test_sorting()
+```
