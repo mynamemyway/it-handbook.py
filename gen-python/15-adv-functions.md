@@ -2835,3 +2835,27 @@ res = my_reduce(my_sum, transformed_numbers)
 
 print(res)
 ```
+
+5. Напишите функцию func_apply(), принимающую функцию и список значений и возвращающую список, в котором каждое значение будет результатом применения переданной функции к переданному списку.
+
+Решение 1
+```python
+def func_apply(func, items):
+    """Применяет переданную функцию к каждому элементу массива"""
+    res = []
+    for item in items:
+        res.append(func(item))
+
+    return res
+
+
+print(func_apply(bool, [1, 2, 3, 4, 5, 0]))
+# [True, True, True, True, True, False]
+```
+
+Решение 2
+```python
+def func_apply(f, items):
+    """Применяет переданную функцию к каждому элементу массива"""
+    return [f(item) for item in items]
+```
