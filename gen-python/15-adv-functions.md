@@ -2688,5 +2688,31 @@ print(*transformed_numbers, sep='\n')
 
 Решение 2
 ```python
+# Далее можем заменить самописные на встроенные map, filter
 
+# Проверка условия для фильтра
+def true_num(n):
+    """Проверяет условие фильтрации для числа"""
+    return 99 < abs(n) < 1000 and n % 5 == 2
+
+
+# Возведение в куб
+def cube(n):
+    """Возводит число в куб"""
+    return n**3
+
+
+filtered_numbers = filter(true_num, numbers)
+transformed_numbers = map(cube, filtered_numbers)
+
+print(*transformed_numbers, sep='\n')
+```
+
+Решение 3
+```python
+# Но поскольку используются не встроенные доп. функции,
+# для эффективности возвращаемся к списочному генератору
+# которое решает задачу в одну быструю строку
+
+print(*(n**3 for n in numbers if (99 < abs(n) < 1000 and n % 5 == 2)), sep='\n')
 ```
