@@ -2639,3 +2639,54 @@ def my_round(num, r=2):
 # Передаем в `map` адаптированную функцию округления
 print(*map(my_round, numbers), sep='\n')
 ```
+
+2. Напишите программу, которая отбирает из списка numbers трехзначные числа, дающие при делении на 5 остаток 2, и выводит их кубы, каждый на отдельной строке.
+
+Решение 1
+```python
+# 1. Фильтрация
+def my_filter(operation, nums):
+    """Фильтрует массив используя `true_num`"""
+    res = []
+    for n in nums:
+        if operation(n):
+            res.append(n)
+
+    return res
+
+
+# 3. Преобразование
+def my_map(cube, nums):
+    """Преобразуем элементы массива используя `cube`"""
+    res = []
+    for n in nums:
+        res.append(cube(n))
+
+    return res
+
+
+# 2. Проверка условия для фильтра
+def true_num(n):
+    """Проверяет условие фильтрации для числа"""
+    return 99 < abs(n) < 1000 and n % 5 == 2
+
+
+# 4. Возведение в куб
+def cube(n):
+    """Возводит число в куб"""
+    return n**3
+
+
+numbers = [478, 612, 548, 741, 637, 165, 132]
+
+
+filtered_numbers = my_filter(true_num, numbers)
+transformed_numbers = my_map(cube, filtered_numbers)
+
+print(*transformed_numbers, sep='\n')
+```
+
+Решение 2
+```python
+
+```
