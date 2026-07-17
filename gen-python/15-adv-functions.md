@@ -2716,3 +2716,122 @@ print(*transformed_numbers, sep='\n')
 
 print(*(n**3 for n in numbers if (99 < abs(n) < 1000 and n % 5 == 2)), sep='\n')
 ```
+
+3. Напишите программу для вычисления и вывода суммы квадратов элементов списка numbers.
+
+Решение 1
+```python
+def my_reduce(operation, items, initializer):
+    """Схлопывает массив в сумму элементов"""
+    acc = initializer
+    for item in items:
+        acc = operation(acc, item)
+    return acc
+
+
+def square(x):
+    """Возводит число в квадрат"""
+    return x**2
+
+
+def my_sum(x, y):
+    """Возвращает сумму двух аргументов"""
+    return x + y
+
+
+# Готовим последовательность чисел генератором, чтобы не хардкорить в my_reduce
+print(my_reduce(my_sum, (square(n) for n in numbers), 0))
+```
+
+Решение 2
+```python
+def square(n):
+    """Возводит число в квадрат"""
+    return n**2
+
+
+print(sum(map(square, numbers)))
+```
+
+Решение 3
+```python
+from functools import reduce as r
+
+numbers = [7, 5, -4, 0, 3, -5, 6, 7, 15]
+
+print(r(lambda x, y: x + y**2, numbers, 0))
+```
+
+Решение 4
+```python
+print(sum(n**2 for n in numbers))
+```
+
+4. Сумма квадратов двузначных чисел из списка numbers, которые делятся на 7 без остатка.
+
+Решение 1
+```python
+numbers = [14, 15, -1, 2, 0, -42, 36, 2]
+
+print(sum(n**2 for n in numbers if (n % 7 == 0 and 9 < abs(n) < 100)))
+```
+
+Решение 2
+```python
+# 1. Фильтрация
+def my_filter(operation, nums):
+    """Фильтрует массив используя `true_num`"""
+    res = []
+    for n in nums:
+        if operation(n):
+            res.append(n)
+
+    return res
+
+
+# 3. Преобразование
+def my_map(square, nums):
+    """Преобразуем элементы массива используя `square`"""
+    res = []
+    for n in nums:
+        res.append(square(n))
+
+    return res
+
+
+# 5. Скрутка
+def my_reduce(operation, items, initial=0):
+    """Скручивает массив используя `operation`"""
+    acc = initial
+    for item in items:
+        acc = operation(acc, item)
+    return acc
+
+
+# 2. Проверка условия для фильтра
+def true_num(x):
+    """Проверяет условие фильтрации для числа"""
+    return 9 < abs(x) < 100 and x % 7 == 0
+
+
+# 4. Возведение в квадрат
+def square(x):
+    """Возводит число в квадрат"""
+    return x**2
+
+
+# 6. Складываем два элемента
+def my_sum(x, y):
+    """Складывает два числа"""
+    return x + y
+
+
+numbers = [14, 15, -1, 2, 0, -42, 36, 2]
+
+
+filtered_numbers = my_filter(true_num, numbers)
+transformed_numbers = my_map(square, filtered_numbers)
+res = my_reduce(my_sum, transformed_numbers)
+
+print(res)
+```
