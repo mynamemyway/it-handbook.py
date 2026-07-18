@@ -3181,8 +3181,8 @@ import operator
 words = ['Testing ', 'shows ', 'the ', 'presence', ', ', 'not ', 'the ', 'absence ', 'of ', 'bugs'] 
 numbers = [1, 2, -6, -4, 3, 9, 0, -6, -1]
 
-opposite_numbers = list(map(operator.neg, numbers))    #  смена знаков элементов списка
-concat_words = reduce(operator.add, words)             #  конкатенация элементов списка
+opposite_numbers = list(map(operator.neg, numbers))    # смена знаков элементов списка
+concat_words = reduce(operator.add, words)             # конкатенация элементов списка
 
 print(opposite_numbers)
 print(concat_words)
@@ -3274,10 +3274,10 @@ print(only_letters)
 Следующие два определения функций эквивалентны:
 
 ```python
-def standard_function(x):            #  стандартное объявление функции
+def standard_function(x):            # стандартное объявление функции
     return x*2
 
-lambda_function = lambda x: x*2      #  объявление анонимной функции
+lambda_function = lambda x: x*2      # объявление анонимной функции
 ```
 
 Приведенный ниже код:
@@ -3361,9 +3361,9 @@ print(sorted(points, key=lambda point: point[0] + point[1]))      # сортир
 ```python
 numbers = [1, 2, 3, 4, 5, 6]
 
-new_numbers1 = list(map(lambda x: x+1, numbers))      #  увеличиваем на 1
-new_numbers2 = list(map(lambda x: x*2, numbers))      #  удваиваем
-new_numbers3 = list(map(lambda x: x**2, numbers))     #  возводим в квадрат
+new_numbers1 = list(map(lambda x: x+1, numbers))      # увеличиваем на 1
+new_numbers2 = list(map(lambda x: x*2, numbers))      # удваиваем
+new_numbers3 = list(map(lambda x: x**2, numbers))     # возводим в квадрат
 
 print(new_numbers1)
 print(new_numbers2)
@@ -3402,9 +3402,9 @@ print(new_strings)
 ```python
 numbers = [-1, 2, -3, 4, 0, -20, 10, 30, -40, 50, 100, 90]
 
-positive_numbers = list(filter(lambda x: x > 0, numbers))      #  положительные числа
-large_numbers = list(filter(lambda x: x > 50, numbers))        #  числа, большие 50
-even_numbers = list(filter(lambda x: x % 2 == 0, numbers))     #  четные числа
+positive_numbers = list(filter(lambda x: x > 0, numbers))      # положительные числа
+large_numbers = list(filter(lambda x: x > 50, numbers))        # числа, большие 50
+even_numbers = list(filter(lambda x: x % 2 == 0, numbers))     # четные числа
 
 print(positive_numbers)
 print(large_numbers)
@@ -3420,8 +3420,8 @@ print(even_numbers)
 ```
 
 ```python
-fast_positive_numbers = [n for n in numbers if n > 0]      # списочное выражение более эффективно
-iter_positive_numbers = (n for n in numbers if n > 0)      # итератор если используем разово
+fast_positive_numbers = [n for n in numbers if n > 0]     # списочное выражение более эффективно
+iter_positive_numbers = (n for n in numbers if n > 0)     # итератор если используем разово
 
 print(*fast_positive_numbers)
 print(*iter_positive_numbers)
@@ -3432,8 +3432,8 @@ print(*iter_positive_numbers)
 ```python
 words = ['python', 'stepik', 'beegeek', 'iq-option']
 
-new_words1 = list(filter(lambda w: len(w) > 6, words))    #  слова длиною больше 6 символов
-new_words2 = list(filter(lambda w: 'e' in w, words))      #  слова содержащие букву e
+new_words1 = list(filter(lambda w: len(w) > 6, words))    # слова длиною больше 6 символов
+new_words2 = list(filter(lambda w: 'e' in w, words))      # слова содержащие букву e
 
 print(new_words1)
 print(new_words2)
