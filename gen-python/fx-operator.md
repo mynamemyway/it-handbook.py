@@ -2,23 +2,23 @@
 
 ## Самые часто используемые
 
-| Операция             | Синтаксис     | Функция             |
-| :------------------- | :------------ | :------------------ |
-| Addition             | `a + b`       | `add(a, b)`         |
-| Containment Test     | `obj in seq`  | `contains(seq, obj)`|
-| Division             | `a / b`       | `truediv(a, b)`     |
-| Division             | `a // b`      | `floordiv(a, b)`    |
-| Exponentiation       | `a ** b`      | `pow(a, b)`         |
-| Modulo               | `a % b`       | `mod(a, b)`         |
-| Multiplication       | `a * b`       | `mul(a, b)`         |
-| Negation (Arithmetic)| `-a`          | `neg(a)`            |
-| Subtraction          | `a - b`       | `sub(a, b)`         |
-| Ordering             | `a < b`       | `lt(a, b)`          |
-| Ordering             | `a <= b`      | `le(a, b)`          |
-| Equality             | `a == b`      | `eq(a, b)`          |
-| Difference           | `a != b`      | `ne(a, b)`          |
-| Ordering             | `a >= b`      | `ge(a, b)`          |
-| Ordering             | `a > b`       | `gt(a, b)`          |
+| Операция             | Синтаксис     | Функция             | Расшифровка сокращения   |
+| :------------------- | :-----------  | :------------------ | :----------------------- |
+| Addition             | `a + b`       | `add(a, b)`         | ADDition                 |
+| Containment Test     | `obj in seq`  | `contains(seq, obj)`| CONTAINS                 |
+| Division             | `a / b`       | `truediv(a, b)`     | TRUE DIVision            |
+| Division             | `a // b`      | `floordiv(a, b)`    | FLOOR DIVision           |
+| Exponentiation       | `a ** b`      | `pow(a, b)`         | POWer                    |
+| Modulo               | `a % b`       | `mod(a, b)`         | MODulo                   |
+| Multiplication       | `a * b`       | `mul(a, b)`         | MULtiplication           |
+| Negation (Arithmetic)| `-a`          | `neg(a)`            | NEGation                 |
+| Subtraction          | `a - b`       | `sub(a, b)`         | SUBtraction              |
+| Ordering             | `a < b`       | `lt(a, b)`          | Less Than                |
+| Ordering             | `a <= b`      | `le(a, b)`          | Less than or Equal       |
+| Equality             | `a == b`      | `eq(a, b)`          | EQual                    |
+| Difference           | `a != b`      | `ne(a, b)`          | Not Equal                |
+| Ordering             | `a >= b`      | `ge(a, b)`          | Greater than or Equal    |
+| Ordering             | `a > b`       | `gt(a, b)`          | Greater Than             |
 
 
 ## Полный список функций
