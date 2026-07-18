@@ -3024,6 +3024,8 @@ print(result2)
 [3.6, 5.58, 4.319, 6.2024, 91.01344, 32.01213]
 ```
 
+**Элементы последовательностей переданных в `map`** в качестве аргументов, берутся параллельно (индекс в индекс) и итеративно **подставляются как позиционные аргументы в функцию из первого параметра `map`.**
+
 Встроенная функция `round(x, n=0)` принимает два числовых аргумента `x` и `n` и округляет переданное число `x` до `n` цифр после десятичной запятой. Значением по умолчанию для `n` является `0`.
 
 #### Встроенная функция filter()
@@ -3124,23 +3126,23 @@ def mult_func(a, b):
 
 Неполный список функций из модуля `operator` выглядит так:
 
-| Операция             | Синтаксис       | Функция          |
-| :------------------- | :-------------- | :--------------- |
-| Addition             | `a + b`         | `add(a, b)`      |
+| Операция             | Синтаксис       | Функция              |
+| :------------------- | :-------------- | :------------------- |
+| Addition             | `a + b`         | `add(a, b)`          |
 | Containment Test     | `obj in seq`    | `contains(seq, obj)` |
-| Division             | `a / b`         | `truediv(a, b)`  |
-| Division             | `a // b`        | `floordiv(a, b)` |
-| Exponentiation       | `a ** b`        | `pow(a, b)`      |
-| Modulo               | `a % b`         | `mod(a, b)`      |
-| Multiplication       | `a * b`         | `mul(a, b)`      |
-| Negation (Arithmetic)| `-a`            | `neg(a)`         |
-| Subtraction          | `a - b`         | `sub(a, b)`      |
-| Ordering             | `a < b`         | `lt(a, b)`       |
-| Ordering             | `a <= b`        | `le(a, b)`       |
-| Equality             | `a == b`        | `eq(a, b)`       |
-| Difference           | `a != b`        | `ne(a, b)`       |
-| Ordering             | `a >= b`        | `ge(a, b)`       |
-| Ordering             | `a > b`         | `gt(a, b)`       |
+| Division             | `a / b`         | `truediv(a, b)`      |
+| Division             | `a // b`        | `floordiv(a, b)`     |
+| Exponentiation       | `a ** b`        | `pow(a, b)`          |
+| Modulo               | `a % b`         | `mod(a, b)`          |
+| Multiplication       | `a * b`         | `mul(a, b)`          |
+| Negation (Arithmetic)| `-a`            | `neg(a)`             |
+| Subtraction          | `a - b`         | `sub(a, b)`          |
+| Ordering             | `a < b`         | `lt(a, b)`           |
+| Ordering             | `a <= b`        | `le(a, b)`           |
+| Equality             | `a == b`        | `eq(a, b)`           |
+| Difference           | `a != b`        | `ne(a, b)`           |
+| Ordering             | `a >= b`        | `ge(a, b)`           |
+| Ordering             | `a > b`         | `gt(a, b)`           |
 
 Рассмотрим примеры использования функций из модуля `operator`.
 
