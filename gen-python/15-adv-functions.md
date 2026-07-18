@@ -3419,6 +3419,14 @@ print(even_numbers)
 [2, 4, 0, -20, 10, 30, -40, 50, 100, 90]
 ```
 
+```python
+fast_positive_numbers = [n for n in numbers if n > 0]      # списочное выражение более эффективно
+iter_positive_numbers = (n for n in numbers if n > 0)      # итератор если используем разово
+
+print(*fast_positive_numbers)
+print(*iter_positive_numbers)
+```
+
 Приведенный ниже код:
 
 ```python
