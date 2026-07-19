@@ -3657,3 +3657,61 @@ print(type(f))
 `map()`, `filter()`, `reduce()`, `sorted()`, `max()`, `min()` и т.д.
 
 ---
+
+### Задачи
+
+1. Программист поторопился и написал программу неправильно. Доработайте его программу.
+  - преобразует список floats в список чисел, возведенных в квадрат и округленных до одного десятичного
+  - фильтрует список words и оставляет только палиндромы длиной более 4 символов
+  - находит произведение чисел из списка numbers
+```python
+# Исправьте этот код:
+# map_result = list(map(lambda num: num, floats))
+# filter_result = list(filter(lambda name: name, words))
+# reduce_result = reduce(lambda num1, num2: num1 + num2, numbers, 0)
+
+from math import prod as p
+
+floats = [7.6, 15.4, 8.9, -5.6, 42.1]
+words = ['pop', 'level', 'python', 'huh']
+numbers = [4, -8, 5, 12, -85]
+
+# Опитимизируем в списочные выражения, чтобы исключить многократный вызов лямбды -> O(n*k)
+map_result = [round(num**2, 1) for num in floats]
+filter_result = [name for name in words if len(name) > 4 and name == name[::-1]]
+# Заменяем reduce на prod -> O(n)
+reduce_result = p(numbers)
+
+print(map_result)
+print(filter_result)
+print(reduce_result)
+```
+
+2. Вам доступен список data, содержащий информацию о городах в виде списков.
+Напишите программу, которая с помощью встроенных функций filter(), map(), sorted() и reduce() и выводит в алфавитном порядке список primary городов с населением более 10000000 человек, в формате:
+Cities: Bengaluru, Karachi
+
+Решение 1
+```python
+from functools import reduce as r
+
+data = [
+    ['Sydney', 5367206, 'primary'], ['Perth', 2384371, 'nan'],
+    ['Melbourne', 5159211, 'nan'], ['Canberra', 466566, 'admin'],
+    ['Darwin', 127532, 'nan'], ['Jakarta', 41913860, 'admin'],
+    ['Shenzhen', 13878396, 'primary'], ['Kolkata', 22549738, 'primary'],
+]
+
+filtered_data = list(filter(lambda info: info[1] > 10000000 and info[2] == 'primary', data))
+sorted_data = sorted(filtered_data, key=lambda info: info[0])
+result = r(lambda acc, info: (acc + ': ' + info[0]) if acc == 'Cities' else (acc + ', ' + info[0]), sorted_data, 'Cities')
+```
+
+Решение 2
+```python
+# Формируем список только из целевых городов без вложенности
+filtered_data = [info[0] for info in data if info[1] > 10000000 and info[2] == 'primary']
+filtered_data.sort  # сортируем на месте
+
+print('Cities:', ', '.join(filtered_data))
+```
