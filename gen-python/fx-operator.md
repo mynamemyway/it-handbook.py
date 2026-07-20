@@ -23,7 +23,6 @@ op.invert(a)        # ~a (синоним)
 
 
 # Битовые операции:
-
 op.lshift(a, b)     # a << b
 op.rshift(a, b)     # a >> b  
 op.and_(a, b)       # a & b
@@ -32,7 +31,6 @@ op.xor(a, b)        # a ^ b
 
 
 # Операции сравнения:
-
 op.lt(a, b)         # a < b
 op.le(a, b)         # a <= b
 op.eq(a, b)         # a == b
@@ -46,7 +44,6 @@ op.is_not(a, b)     # a is not b
 
 
 # Работа с последовательностями:
-
 op.concat(a, b)     # a + b (для последовательностей)
 op.contains(a, b)   # b in a
 op.countOf(a, b)    # количество вхождений b в a
@@ -64,7 +61,6 @@ op.delslice(a, b, c)    # del a[b:c] (устаревшее)
 
 
 # Функции для атрибутов:
-
 op.attrgetter(attr)     # функция-геттер атрибута
 op.attrgetter(*attrs)   # функция-геттер нескольких атрибутов
 
@@ -74,7 +70,6 @@ name, age = f(person)
 
 
 # Функции для элементов:
-
 op.itemgetter(item)     # функция-геттер элемента
 op.itemgetter(*items)   # функция-геттер нескольких элементов
 
@@ -84,7 +79,6 @@ f = op.itemgetter(1, 3) # получает 2-й и 4-й элементы
 
 
 # Метод-вызыватели:
-
 op.methodcaller(name)       # функция, вызывающая метод
 op.methodcaller(name, *args, **kwargs)
 
@@ -93,7 +87,6 @@ f = op.methodcaller('upper')
 result = f('hello')  # 'HELLO'
 
 # Логические операции:
-
 op.not_(a)          # not a
 op.truth(a)         # True если a истинно, иначе False
 
@@ -103,7 +96,6 @@ op.or_(a, b)        # a or b
 
 
 # Получение полного списка:
-
 import operator
 
 # Получить все функции модуля
