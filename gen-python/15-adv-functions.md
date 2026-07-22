@@ -4129,4 +4129,23 @@ print(*res)
 print(*sorted(mixed_list, key=lambda el: (type(el) is str, el)))
 ```
 
-11.
+11. Напишите программу, которая по трем компонентам заданного цвета, находит компоненты противоположного цвета.
+
+Решение 1
+```python
+rgb = input().split()
+print(*map(lambda c: 255 - int(c), rgb))
+
+Решение 2
+```python
+s = input().split()
+
+def ag_color(rgb: list):
+    """
+    Принимает три параметра цвета RGB
+    Отдает параметры противоположного цвета RGB
+    """
+    return (255 - int(c) for c in rgb)
+
+
+print(*ag_color(s))
