@@ -3888,3 +3888,21 @@ def is_num(n):
 print(*sorted(filter(lambda s: len(s) == 6, words)))
 print(*sorted(word for word in words if len(word) == 6))
 ```
+
+6. Вам доступен список numbers. Напишите программу, которая с помощью встроенных функций map() и filter() пошагово:
+- Удаляет из списка numbers все нечетные числа, бо́льшие 47;
+  - нужны четные
+  - нужны нечетные < 48
+- Делит все четные числа нацело на 2;
+- Полученные числа следует вывести на одной строке, разделив символом пробела и сохранив исходный порядок.
+
+```python
+numbers = [18, 96, 412, 46, 45, 21, 47]
+
+# Используем оператор `not n % 2` вместо == 0 (возвращ. False)
+filtered_nums = filter(lambda n: not n % 2 or n < 48, numbers)
+res = map(lambda n: n // 2 if not n % 2 else n, filtered_nums)
+
+print(*res)
+# 9 48 206 23 45 21 47
+```
