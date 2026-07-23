@@ -4164,6 +4164,7 @@ print(*ag_color(s))
 1. тест [2, 4, 3], 10 задает многочлен 2𝑥² + 4𝑥 + 3
 2. тест [1, 2, 3, 4, 5, 6, 7], 1 задает многочлен 𝑥⁶ + 2𝑥⁵ + 3𝑥⁴ + 4𝑥³ + 5𝑥² + 6𝑥 + 7
 
+Решение 1
 ```python
 def evaluate(coefficients: list, x: int) -> int:
     p = len(coefficients) - 1
@@ -4179,3 +4180,70 @@ n = int(input())
 
 print(evaluate(s, n))
 ```
+
+Решение 2
+```python
+from functools import reduce as r
+import operator as op
+
+def evaluate(coefficients: list[str], x: int) -> int:
+    """
+    Принимает список коэффициентов многочлена и значение 𝑥
+    Возвращает значение многочлена
+    """
+    count = len(coefficients)
+    pows = range(count -1, -1, -1)
+    l = map(lambda k, p: int(k) * x**p, coefficients, pows)
+
+    return r(op.add, l)
+
+s = input().split()
+n = int(input())
+
+print(evaluate(s, n))
+```
+
+Решение 3
+```python
+def evaluate(coefficients, x: int) -> int:
+    """
+    Принимает список коэффициентов многочлена и значение 𝑥
+    Возвращает значение многочлена
+    """
+    count = len(coefficients)
+    pows = range(count -1, -1, -1)
+    return sum(k * x**p for k, p in zip(coefficients, pows))
+
+coef = map(int, input().split())
+n = int(input())
+
+print(evaluate(coef, n))
+```
+
+Решение 4
+```python
+def evaluate(coefficients, x):
+    """
+    Принимает итератор коэффициентов многочлена и значение 𝑥
+    Возвращает значение многочлена
+    """
+    res = 0
+    for c in coefficients:
+        res = res * x + c
+    return res
+
+coef = map(int, input().split())
+n = int(input())
+
+print(evaluate(coef, n))
+```
+
+#### 📝 Схема Горнера для вычисления многочлена (Эталон DSA)
+
+Оптимизация вычислений за счет отказа от операции возведения в степень (**)
+- **Идея:** Вынесение переменной x за скобки `ax^2 + bx + c` = `к (a * x + b) * x + c`
+- **Механика:** Результат = (Предыдущий_результат * x) + Текущий_коэффициент
+- **Time:** O(N) — Самый быстрый способ вычисления многочленов.
+- **Space:** O(1) — Изменения происходят в одной переменной-аккумуляторе.
+
+---
