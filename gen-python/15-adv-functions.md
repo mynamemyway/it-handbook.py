@@ -4946,4 +4946,42 @@ def is_good_password(s: str) -> str:
 print(is_good_password(password))
 ```
 
-7.
+7. Отличники
+Убедиться, что в каждом классе есть хотя бы один отличник – ученик с оценкой 5 по контрольной работе. Напишите программу с использованием встроенных функций `all()`, `any()` для проверки.
+
+**Ввод**
+- натуральное число n – количество классов
+- натуральное число k – количество учеников в классе
+- далее вводится k строк вида: `фамилия оценка`
+
+**Вывод**
+`YES`, если в каждом классе есть хотя бы один отличник, и `NO` в противном случае.
+
+Решение 1
+```python
+count_cl = int(input())
+
+res = []
+for cl in range(count_cl):
+    tmp = []
+    count_st = int(input())
+    for _ in range(count_st):
+        grade = (input()[-1])
+        tmp.append(True) if '5' in grade else tmp.append(False)
+    res.append(any(tmp))
+
+print('YES' if all(res) else 'NO')
+```
+
+Решение 2
+```python
+count_cl = int(input())
+
+res = []
+for _ in range(count_cl):
+     count_st = int(input())
+     have_5 = any([input()[-1] == '5' for _ in range(count_st)])
+     res.append(have_5)
+
+print('YES' if all(res) else 'NO')
+```
