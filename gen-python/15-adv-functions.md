@@ -4924,3 +4924,26 @@ for num in range(a, b + 1):
     if all('0' not in digit and not num % int(digit) for digit in str(num)):
         print(num, end=' ')
 ```
+
+6. Хороший пароль по условиям этой задачи состоит как минимум из 7 символов, содержит хотя бы одну цифру, заглавную и строчную букву. Напишите программу со встроенной функцией `any()` для определения хорош ли введенный пароль.
+
+**Ввод:**
+На вход программе подаётся одна строка текста.
+**Вывод:**
+Программа должна вывести YES, если строка – хороший пароль, и NO в противном случае.
+
+```python
+password = input()
+
+def is_good_password(s: str) -> str:
+    """Проверяет пароль по 3 параметрам"""
+    mn_count = len(s) > 6
+    up_c = any(filter(str.isupper, s))
+    lo_c = any(filter(str.islower, s))
+    nums = any(filter(str.isdigit, s))
+    return 'YES' if all((mn_count, up_c, lo_c, nums)) else 'NO'
+
+print(is_good_password(password))
+```
+
+7.
