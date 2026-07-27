@@ -1508,5 +1508,11 @@ print(replace_homoglyphs(text))
 
 Реализация
 ```python
-
+def transform(text):
+    res = {}
+    for idx, char in enumerate(text):
+        # Используем setdefault для инициализации множества, если символ еще не встречался
+        # .get() не подходит, так как он возвращает None, если ключ отсутствует
+        res.setdefault(char, set()).add(idx)
+    return res
 ```
