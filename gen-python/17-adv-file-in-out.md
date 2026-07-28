@@ -571,3 +571,49 @@ print(ord('\r'))
 | `file.closed`      | возвращает истину (`True`), если файл закрыт, иначе ложь (`False`) |
 | `file.mode`        | возвращает режим доступа, с помощью которого был открыт файл       |
 | `file.name`        | возвращает имя файла                                               |
+
+
+---
+
+### Задачи
+
+1. Вывести строки из файла languages.txt, которые содержат букву 'C'
+
+```text
+Python
+Java
+Javascript
+C#
+C
+C++
+PHP
+R
+Objective-C
+```
+
+Решение 1
+```python
+file = open('languages.txt', 'r', encoding='utf-8')
+
+line = file.readline()
+
+for idx, line in enumerate(file):
+    if 'C' in line:
+        print(f'{idx} - {line.strip()}')
+
+# 2 - C#
+# 3 - C
+# 4 - C++
+# 7 - Objective-C
+```
+
+Решение 2
+```python
+file = open('languages.txt', 'r', encoding='utf-8')
+languages = file.readlines()
+file.close()
+
+res = map(str.strip, filter(lambda s: 'C' in s, languages))
+
+print(*res, sep='\n')
+```
