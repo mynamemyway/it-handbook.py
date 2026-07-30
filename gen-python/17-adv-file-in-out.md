@@ -692,6 +692,7 @@ print(sum_by_all(input()))
 **Вывод**
 Общая стоимость заказа.
 
+Решение 1
 ```python
 from math import prod
 
@@ -709,3 +710,57 @@ def total_order(file_name: str) -> int:
 
 print(total_order(input()))
 ```
+
+Решение 2
+```python
+from math import prod as prod
+
+
+def total_order(file_name: str):
+    """
+    Возвращает сумму всех позиций заказа
+    """
+    res = []
+    file = open(file_name, encoding='utf-8')
+    lines = map(str.split, file.readlines())
+    for name, cost, price in lines:
+        cost_item = prod(map(int, (cost, price)))
+        res.append(cost_item)
+    return sum(res)
+
+
+print(total_order(input()))
+```
+
+Решение 3 (оптимизация)
+```python
+from math import prod as prod
+
+
+def total_order(file_name: str) -> int:
+    """
+    Возвращает сумму всех позиций заказа
+    """
+    file = open(file_name, encoding='utf-8')
+    lines = map(str.split, file)
+    total = sum((prod(map(int, (cost, price))) for name, cost, price in lines))
+    file.close()
+    return total
+
+
+print(total_order(input()))
+```
+
+#### 📝 Декларативный пре-процессинг потока: `map()` поверх итератора файла
+
+Оптимизация структуры данных до начала итерации цикла для ускорения доступа к элементам.
+
+- Суть: Вместо того чтобы внутри генератора на каждом шаге вручную вызывать `line.split('\t')` и обращаться к элементам по индексам `[1]`, `[2]`, мы один раз накладываем `map(str.split, file)` на сам файл.
+- Механика: 
+  1. `map(str.split, file)` создает ленивую цепочку. Каждая сырая строка файла автоматически превращается в готовый список слов в момент чтения.
+  2. Внутри генератора `for name, cost, price in lines` происходит нативная распаковка списка. 
+- Эффект:
+  - Код избавляется от индексов и срезов типа `[1:]`, становясь читаемым и безопасным.
+  - Операции преобразования строки в список скрыты на C-уровне внутри `map`, что работает наносекундно быстрее ручного парсинга в теле генератора.
+
+---
