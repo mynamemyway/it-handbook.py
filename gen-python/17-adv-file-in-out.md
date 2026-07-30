@@ -617,3 +617,84 @@ res = map(str.strip, filter(lambda s: 'C' in s, languages))
 
 print(*res, sep='\n')
 ```
+
+2. Содержимое файла 📑
+Напишите программу, которая принимает на вход строку с именем текстового файла и выводит содержимое этого файла.
+
+Решение:
+```python
+file_name = input()
+
+text = open(file_name, encoding='utf-8')
+print(text.read())
+
+text.close()
+```
+
+3. Предпоследняя строка
+Напишите программу, которая принимает на вход строку с именем текстового файла и выводит предпоследнюю строку этого файла.
+
+```python
+file_name = input()
+
+text = open(file_name, encoding='utf-8')
+print(text.readlines()[-2])
+text.close()
+```
+
+4. Случайная строка 🎲
+Напишите функцию get_random_string(filename), которая принимает название файла и возвращает случайную строку из этого файла (с удаленным символом перевода на новую строку).
+
+```python
+from random import choice
+
+def get_random_string(filename: str) -> str:
+    file = open(filename, encoding='utf-8')
+    random_line = choice(file.readlines()).rstrip()
+    file.close()
+    return random_line
+```
+
+5. Сумма всех
+Вам доступен текстовый файл, состоящий из нескольких строк, в каждой из которых записано целое число. Напишите программу, которая принимает на вход название файла и выводит сумму чисел из всех строк этого файла.
+
+```python
+def sum_by_all(file_name: str) -> int:
+    """
+    Возвращает сумму целых чисел из текстового файла
+    """
+    file = open(file_name, encoding='utf-8')
+    # Итерируем сразу по файлу, т.к. это объект итератор
+    res = sum(map(int, file))
+    file.close()
+    return res
+
+
+print(sum_by_all(input()))
+```
+
+6. Общая стоимость 💰
+Вам доступен текстовый файл с информацией о заказе из интернет-магазина. В этом файле каждая строка с помощью символа табуляции (`\t`) разделена на три колонки: наименование товара, количество товара (целое число), цена (в рублях) товара за 1 шт (целое число). Напишите программу, которая принимает на вход название файла и выводит общую стоимость заказа из этого файла.
+
+**Ввод**
+Строка текста с именем существующего текстового файла
+**Вывод**
+Общая стоимость заказа.
+
+```python
+from math import prod as prod
+
+
+def total_order(file_name: str):
+    """
+    Возвращает сумму всех позиций заказа
+    """
+    file = open(file_name, encoding='utf-8')
+    res = []
+    for line in file.readlines():
+        cost_item = prod(map(int, line.split('\t')[1:]))
+        res.append(cost_item)
+    return sum(res)
+
+print(total_order(input()))
+```
