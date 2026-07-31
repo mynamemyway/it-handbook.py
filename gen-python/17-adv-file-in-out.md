@@ -985,8 +985,20 @@ with open('input.txt', 'r') as input_file, open('output.txt', 'w') as output_fil
 def reverse_lines(text: str) -> None:
     """Выводит строки из файла в обратном порядке"""
     with open(text, encoding='utf-8') as file:
-        res = (line.strip() for line in file.readlines()[::-1])
+        res = (line.strip() for line in reversed(file.readlines())
     print(*res, sep='\n')
 
 reverse_lines(input())
 ```
+
+#### 📝 Ленивый разворот последовательностей: Срез `[::-1]` против `reversed()`
+
+Оптимизация оперативной памяти при чтении данных с конца.
+
+- Проблема среза `[::-1]`: Создает в памяти вторую полную копию списка. При работе с массивами строк или логами (после `.readlines()`) это удваивает расход RAM (Space: O(N) с двойной константой).
+- Паттерн оптимизации:
+  ```python
+  res = (line.strip() for line in reversed(file.readlines()))
+  ```
+- Механика: Функция `reversed()` принимает существующий список и возвращает легкий ленивый итератор. Он не копирует элементы, а просто хранит ссылку на исходный список и шагает по его индексам справа налево.
+- Эффект: Исключаются накладные расходы на дублирование данных в памяти.
