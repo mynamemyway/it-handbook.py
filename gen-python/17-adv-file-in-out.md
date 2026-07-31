@@ -981,12 +981,24 @@ with open('input.txt', 'r') as input_file, open('output.txt', 'w') as output_fil
 **Вывод**
 строки указанного файла в обратном порядке, каждую на новой строке.
 
+Решение 1
 ```python
 def reverse_lines(text: str) -> None:
     """Выводит строки из файла в обратном порядке"""
     with open(text, encoding='utf-8') as file:
         res = (line.strip() for line in reversed(file.readlines())
     print(*res, sep='\n')
+
+reverse_lines(input())
+```
+
+Решение 2
+```python
+def reverse_lines(text: str) -> None:
+    """Выводит строки из файла в обратном порядке"""
+    with open(text, encoding='utf-8') as file:
+        for line in reversed(file.readlines()):
+            print(line.strip())
 
 reverse_lines(input())
 ```
