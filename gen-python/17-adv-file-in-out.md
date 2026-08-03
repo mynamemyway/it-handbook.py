@@ -1096,3 +1096,37 @@ with open(input(), encoding='utf8') as file:
     res = (sum(map(int, line.split())) for line in file)
     print(*res, sep='\n')
 ```
+
+#### 3. Сумма чисел в файле
+Вам доступен текстовый файл, в котором могут быть записаны цифры, буквы и пробелы. Числом назовем последовательность одной и более цифр, идущих подряд (число всегда неотрицательно). Напишите программу, которая принимает на вход название файла и вычисляет сумму всех чисел, записанных в нем.
+
+**Ввод**
+Строка текста с именем существующего текстового файла
+**Вывод**
+Сумма всех чисел, записанных в файле.
+
+Решение 1
+```python
+with open(input(), encoding='utf-8') as file:
+    res = []
+    for line in file:
+        string = ''
+        for s in line:
+            string += s if s.isdigit() else ' '
+        res.append(sum(map(int, string.split())))
+
+print(sum(res))
+```
+
+Решение 2
+```python
+with open(input(), encoding='utf-8') as file:
+    total = 0
+    for line in file:
+        # Работаем с list для эффективности, затем один раз конверт в строку
+        string = ''.join(s if s.isdigit() else ' ' for s in line)
+        # Наполняем счётчик без расходов на append
+        total += sum(map(int, string.split()))
+
+print(total)
+```
