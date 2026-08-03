@@ -1222,3 +1222,17 @@ with open(input()) as file:
         if line[0].startswith('G') and int(line[-1]) >= 500000: 
             print(line[0])
 ```
+
+Решение с функцией
+```python
+def special_countries(file_name: str) -> None:
+    """Фильтрует города по двум параметрам"""
+    with open(input()) as file:
+        for line in file:
+            line = line.split('\t')
+            if line[0].startswith('G') and int(line[-1]) >= 500000:
+                print(line[0])
+
+
+print(special_countries(input()))
+```
