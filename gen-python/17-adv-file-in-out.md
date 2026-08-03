@@ -1077,3 +1077,22 @@ print(*longest_lines, sep='\n')
 Строка текста с именем существующего текстового файла
 **Вывод**
 Сумма чисел для каждой строки.
+
+Решение 1
+```python
+with open(input(), encoding='utf8') as file:
+    res = []
+    for line in file:
+        res.append(sum(map(int, line.split())))
+
+print(*res, sep='\n')
+```
+
+Решение 2
+```python
+with open(input(), encoding='utf8') as file:
+    # Оставляем преобразование с map как приоритетное по C-Python
+    # Пакуем map в генератор для экономии памяти и перемещаем Print в контекст
+    res = (sum(map(int, line.split())) for line in file)
+    print(*res, sep='\n')
+```
