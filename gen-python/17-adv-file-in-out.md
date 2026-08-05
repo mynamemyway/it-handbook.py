@@ -1627,3 +1627,46 @@ def fresco_goats(file):
     with open('answer.txt', 'w') as output:
         output.writelines(sorted(need_colors))
 ```
+
+#### 6. Конкатенация файлов 🗄️
+Напишите функцию `concatenate_files()`, которая принимает произвольное количество аргументов-строк с названиями файлов, создает файл `output.txt` и выводит в него содержимое всех файлов, не меняя их порядка.
+
+**Ввод**
+Произвольное количество строк с названиями файлов
+**Вывод**
+Запись содержимого всех файлов в файл output.txt в соответствии с условием задачи.
+
+Решение 1
+```python
+def concatenate_files(*args):
+    res = []
+    for file in args:
+        with open(file, encoding='utf-8') as input:
+            res.extend(input.readlines())
+
+    with open('output.txt', 'w', encoding='utf-8') as output:
+        output.writelines(res)
+
+#Тестовый вызов
+concatenate_files('travelling1.txt', 'travelling2.txt')
+with open('output.txt') as f:
+    print(f.read())
+```
+
+#### 📝 Потоковое объединение файлов через `writelines()`
+
+Оптимизация оперативной памяти до O(1) при конкатенации текстовых данных.
+
+- Проблема методов `read()` и `readlines()`: Загружают содержимое файла в RAM целиком (в виде монолитной строки или списка строк). При обработке больших файлов (от 1 ГБ) это вызывает ошибку `MemoryError`.
+- Паттерн оптимизации:
+
+Решение 2:
+  ```python
+  def concatenate_files(*args):
+      with open('output.txt', 'w', encoding='utf-8') as output:
+          for file in args:
+              with open(file, encoding='utf-8') as input:
+                  output.writelines(input)
+  ```
+- Механика: Объект `input` является ленивым итератором, который читает файл с диска небольшими буферами. Метод `writelines()` принимает этот итератор и запускает цикл на уровне C-API, транслируя данные напрямую в выходной поток.
+- Эффект: Расход RAM стабилен, минимален и не зависит от размера файлов. Исключаются накладные расходы на создание Python-объектов строк внутри явного цикла `for`.
