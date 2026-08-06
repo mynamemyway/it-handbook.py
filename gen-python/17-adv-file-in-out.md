@@ -1683,6 +1683,7 @@ def write_long_session_users(logfile):
     with open(logfile) as input, open('output.txt', 'w') as output:
         for line in input:
             name, t_in, t_out = line.rstrip().split(',')
+            # Остаток от деления отрицательного числа берется в сторону знака делителя
             if (time_convert(t_out) - time_convert(t_in)) % 1440 >= 60:
                 print(name, file=output)
 ```
