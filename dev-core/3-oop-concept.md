@@ -139,7 +139,7 @@ class BankAccount:
 
 **Правила именования:**
 - Классы именуются в стиле PascalCase (CapWords): `UserManager`, `NetworkClient`.
-- Объекты именуются в стиле snake_case: `user_manager`, `network_client`.
+- Переменные (для объектов) именуются в стиле snake_case: `user_manager`, `network_client`.
 - Имена классов и объектов обычно используются в единственном числе.
 - Для реального кода предпочтительны понятные и описательные имена переменных.
 
