@@ -20,7 +20,7 @@
 
 ---
 
-## 🎓 Результат
+## 🎓 Результаты
 <table>
   <tr>
     <td><img src="https://stepik.org/certificate/e1fad58223f0bde9716e3114bd31a25d31bc29e6.png?resolution=high" width="auto"></td>
