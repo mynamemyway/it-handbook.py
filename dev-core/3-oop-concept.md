@@ -1416,3 +1416,41 @@ account = BankAccount(1000)
 account.deposit(500)
 print(account.balance)
 ```
+
+#### 4. Создание класса Player
+Создаём класс и метод, который уменьшает и увеличивает громкость музыки на 1.
+
+**Создание класса:**
+1. Создайте класс `Player`.
+2. Определите `__init__`, который создаёт атрибут `volume` со значением параметра `volume`.
+3. Определите метод `increase_volume`, который увеличивает атрибут `volume` на 1 при каждом вызове.
+4. Определите метод `decrease_volume`, который уменьшает атрибут `volume` на 1 при каждом вызове.
+
+**Ввод**
+Строка текста с начальным значением громкости и вызовы методов созданного класса
+**Вывод**
+Значение громкости после изменения в соответствии с условием задачи
+
+Реализация
+```python
+# Создайте класс Player, атрибут volume, метод __init__, increase_volume, decrease_volume
+class Player:
+    def __init__(self, volume) -> None:
+        self.volume = volume
+
+    def increase_volume(self):
+        self.volume += 1
+
+    def decrease_volume(self):
+        self.volume -= 1
+
+        
+# Проверочный код не удаляйте:
+player = Player(5)
+
+player.increase_volume()
+player.increase_volume()
+player.decrease_volume()
+
+print(player.volume)
+```
