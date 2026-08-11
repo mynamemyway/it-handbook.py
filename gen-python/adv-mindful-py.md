@@ -732,7 +732,7 @@ plus(5, 100)
 
 ### Практика
 
-#### 1. Мой первый декоратор
+#### Мой первый декоратор
 
 ```python
 def log_decorator(func):
@@ -750,9 +750,6 @@ def auth_user(name):
 
 print(auth_user(input()))
 ```
-
-```markdown
-### Практика
 
 #### Сюжет
 Алон создаёт программу для информирования клиента о транзакциях. Например, если клиент пополняет свой баланс, ему приходит сообщение: `Баланс пополнен!` Если клиент совершил покупку, приходит сообщение: `Покупка совершена!` Если сумма покупки превышает баланс, приходит сообщение: `Недостаточно средств!` Алон использует недавно полученные знания о декораторах, чтобы создать универсальное решение для этой задачи.
@@ -794,3 +791,39 @@ change_balance(int(input()))  # Недостаточно средств!
 |         | -900           | Баланс пополнен!       |
 |         | 1000           | Недостаточно средств!  |
 |         | -2000          |                        |
+
+#### Реализация
+
+```python
+# Определите декоратор balance_decorator:
+def balance_decorator(func):
+    def wrapper(*args, **kwargs):
+        num = args[0]
+        if num > 0:
+            print('Баланс пополнен!')
+            return func(num)
+        elif num < 0 and balance + num >= 0:
+            print('Покупка совершена!')
+            return func(num)
+        elif num < 0 and balance + num < 0:
+            print('Недостаточно средств!')
+    return wrapper
+
+
+# Код ниже, пожалуйста не меняйте:
+@balance_decorator
+def change_balance(num):
+    """Функция измененяет баланс"""
+    global balance
+    balance += num
+
+balance = int(input())
+transaction = 0
+
+while True:
+    transaction = int(input())
+    if transaction == 777:
+        print('Касса закрыта')
+        break
+    change_balance(transaction)
+```
