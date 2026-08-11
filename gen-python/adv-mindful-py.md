@@ -649,14 +649,14 @@ print(add(3, 5))
 def auth_decorator(func):
     def wrapper(user, *args, **kwargs):
         if user == "admin":
-            return func(*args, **kwargs)
+            return func(user, *args, **kwargs)
         else:
             print("Доступ запрещён")
             return None  # Явное указание на возвращаемое значение
     return wrapper
 
 @auth_decorator
-def secret_function(data):
+def secret_function(user, data):
     print(f"Секретные данные: {data}")
 
 secret_function("admin", "Пароли")  # Секретные данные: Пароли
