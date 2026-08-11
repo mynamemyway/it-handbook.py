@@ -453,6 +453,29 @@ def input_kassa(cash):
 | 1       | 1000<br>300<br>-500<br>2000 | 2800            |
 | 2       | 3000<br>1000<br>-4000<br>1  | 1               |
 
+#### Решение
+
+```python
+def input_kassa(cash: int):
+    """Функция-фабрика для обратотки транзакций и вывода результата"""
+    def operation_with_kassa(number):
+        nonlocal cash
+        cash += number
+
+    def print_kassa():
+        print(cash)
+
+    return operation_with_kassa, print_kassa
+
+
+add_trans, check_balance = input_kassa(int(input()))
+add_trans(int(input()))
+add_trans(int(input()))
+add_trans(int(input()))
+
+check_balance()
+```
+
 ---
 
 ## Декораторы (функции-обёртки)
