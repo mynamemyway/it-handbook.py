@@ -125,33 +125,25 @@ WHERE p.release_date > '2014-09-30';
   - вокруг операторов сравнения
 
 ```sql
-(
-    SELECT
-        f.species_name,
-        AVG(f.height) AS average_height,
-        AVG(f.diameter) AS average_diameter
-    FROM flora AS f
-    WHERE
-        f.species_name = 'Banksia'
-        OR f.species_name = 'Sheoak'
-        OR f.species_name = 'Wattle'
-    GROUP BY f.species_name, f.observation_date
-)
+(SELECT f.species_name,
+    AVG(f.height) AS average_height,
+    AVG(f.diameter) AS average_diameter
+FROM flora AS f
+WHERE f.species_name = 'Banksia'
+    OR f.species_name = 'Sheoak'
+    OR f.species_name = 'Wattle'
+GROUP BY f.species_name, f.observation_date)
 
 UNION ALL
 
-(
-    SELECT
-        b.species_name,
-        AVG(b.height) AS average_height,
-        AVG(b.diameter) AS average_diameter
-    FROM botanic_garden_flora AS b
-    WHERE
-        b.species_name = 'Banksia'
-        OR b.species_name = 'Sheoak'
-        OR b.species_name = 'Wattle'
-    GROUP BY b.species_name, b.observation_date
-);
+(SELECT b.species_name,
+    AVG(b.height) AS average_height,
+    AVG(b.diameter) AS average_diameter
+FROM botanic_garden_flora AS b
+WHERE b.species_name = 'Banksia'
+    OR b.species_name = 'Sheoak'
+    OR b.species_name = 'Wattle'
+GROUP BY b.species_name, b.observation_date);
 ```
 
 **Примечание**:
@@ -204,8 +196,12 @@ INNER JOIN crew AS c
 
 #### Подзапросы и CTE
 Подзапросы форматируются по тем же правилам, что и основной запрос:
-тело в скобках получает +4 к отступу.
-Закрывающая скобка — на новой строке, под парной открывающей.
+- Тело в скобках получает +4 к отступу.
+- Закрывающая скобка — на новой строке, по уровню начала блока, который она закрывает.
+
+Скобки вокруг веток `UNION` — группировка, а не вложенность:
+- Ветку форматируем как обычный запрос, скобки клеим к `SELECT` и последней строке.
+- +4 — только для реальных подзапросов внутри внешнего запроса.
 
 Для читаемости предпочитайте **CTE** (`WITH ... AS`) вложенным подзапросам:
 
