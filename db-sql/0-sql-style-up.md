@@ -74,7 +74,7 @@ FROM staff;
 SELECT first_name AS fn
 FROM staff AS s1
 JOIN students AS s2
-  ON s2.mentor_id = s1.staff_num;
+    ON s2.mentor_id = s1.staff_num;
 
 SELECT SUM(s.monitor_tally) AS monitor_total
 FROM staff AS s;
@@ -116,32 +116,42 @@ WHERE p.release_date > '2014-09-30';
 #### Пробелы
 - Ключевые слова (`SELECT`, `FROM`, `WHERE`, `JOIN`) выравниваются **по левому краю**.
   Это современный стандарт, принятый в `sqlfluff`, `dbt`, Google SQL Style Guide.
-- Содержимое (столбцы, условия) — с отступом после ключевого слова.
+- Содержимое клаузы (столбцы, условия) — **фиксированные 4 пробела** (как в Python).
+  Каждый уровень скобок (подзапрос, тело CTE) добавляет ещё +4.
+- `AND` / `OR` — на том же уровне, что и первое условие клаузы.
 - Пробелы ставятся:
   - до и после `=`
   - после запятых
   - вокруг операторов сравнения
 
 ```sql
-(SELECT f.species_name,
-        AVG(f.height)   AS average_height,
+(
+    SELECT
+        f.species_name,
+        AVG(f.height) AS average_height,
         AVG(f.diameter) AS average_diameter
- FROM flora AS f
- WHERE f.species_name = 'Banksia'
-    OR f.species_name = 'Sheoak'
-    OR f.species_name = 'Wattle'
- GROUP BY f.species_name, f.observation_date)
+    FROM flora AS f
+    WHERE
+        f.species_name = 'Banksia'
+        OR f.species_name = 'Sheoak'
+        OR f.species_name = 'Wattle'
+    GROUP BY f.species_name, f.observation_date
+)
 
 UNION ALL
 
-(SELECT b.species_name,
-        AVG(b.height)   AS average_height,
+(
+    SELECT
+        b.species_name,
+        AVG(b.height) AS average_height,
         AVG(b.diameter) AS average_diameter
- FROM botanic_garden_flora AS b
- WHERE b.species_name = 'Banksia'
-    OR b.species_name = 'Sheoak'
-    OR b.species_name = 'Wattle'
- GROUP BY b.species_name, b.observation_date);
+    FROM botanic_garden_flora AS b
+    WHERE
+        b.species_name = 'Banksia'
+        OR b.species_name = 'Sheoak'
+        OR b.species_name = 'Wattle'
+    GROUP BY b.species_name, b.observation_date
+);
 ```
 
 **Примечание**:
@@ -158,56 +168,64 @@ UNION ALL
 
 ```sql
 INSERT INTO albums (title, release_date, recording_date)
-VALUES ('Charcoal Lane',    '1990-01-01 01:01:01.00000', '1990-01-01 01:01:01.00000'),
-       ('The New Danger',   '2008-01-01 01:01:01.00000', '1990-01-01 01:01:01.00000');
+VALUES
+    ('Charcoal Lane', '1990-01-01 01:01:01.00000', '1990-01-01 01:01:01.00000'),
+    ('The New Danger', '2008-01-01 01:01:01.00000', '1990-01-01 01:01:01.00000');
 
 UPDATE albums
 SET release_date = '1990-01-01 01:01:01.00000'
 WHERE title = 'The New Danger';
 
-SELECT a.title,
-       a.release_date,
-       a.recording_date,
-       a.production_date -- grouped dates together
+SELECT
+    a.title,
+    a.release_date,
+    a.recording_date,
+    a.production_date -- grouped dates together
 FROM albums AS a
-WHERE a.title = 'Charcoal Lane'
-   OR a.title = 'The New Danger';
+WHERE
+    a.title = 'Charcoal Lane'
+    OR a.title = 'The New Danger';
 ```
 
 #### JOIN
-Объединения выравниваются по левому краю, условия `ON` — с отступом.
+Объединения выравниваются по левому краю, условия `ON` — с отступом 4.
 
 ```sql
-SELECT r.last_name
+SELECT
+    r.last_name
 FROM riders AS r
 INNER JOIN bikes AS b
-       ON r.bike_vin_num = b.vin_num
-      AND b.engine_tally > 2
+    ON r.bike_vin_num = b.vin_num
+    AND b.engine_tally > 2
 INNER JOIN crew AS c
-       ON r.crew_chief_last_name = c.last_name
-      AND c.chief = 'Y';
+    ON r.crew_chief_last_name = c.last_name
+    AND c.chief = 'Y';
 ```
 
 #### Подзапросы и CTE
-Подзапросы форматируются по тем же правилам, что и основной запрос.
+Подзапросы форматируются по тем же правилам, что и основной запрос:
+тело в скобках получает +4 к отступу.
 Закрывающая скобка — на новой строке, под парной открывающей.
 
 Для читаемости предпочитайте **CTE** (`WITH ... AS`) вложенным подзапросам:
 
 ```sql
 WITH confirmed_champions AS (
-    SELECT last_name,
-           MAX(YEAR(championship_date)) AS last_year
+    SELECT
+        last_name,
+        MAX(YEAR(championship_date)) AS last_year
     FROM champions
-    WHERE confirmed = 'Y'
-      AND YEAR(championship_date) > 2008
+    WHERE
+        confirmed = 'Y'
+        AND YEAR(championship_date) > 2008
     GROUP BY last_name
 )
-SELECT r.last_name,
-       c.last_year AS last_championship_year
+SELECT
+    r.last_name,
+    c.last_year AS last_championship_year
 FROM riders AS r
 INNER JOIN confirmed_champions AS c
-       ON c.last_name = r.last_name;
+    ON c.last_name = r.last_name;
 ```
 
 ### Формальные тонкости
@@ -217,14 +235,16 @@ INNER JOIN confirmed_champions AS c
 - Избегайте `UNION` и временных таблиц без необходимости.
 
 ```sql
-SELECT CASE postcode
-           WHEN 'BN1' THEN 'Brighton'
-           WHEN 'EH1' THEN 'Edinburgh'
-       END AS city
+SELECT
+    CASE postcode
+        WHEN 'BN1' THEN 'Brighton'
+        WHEN 'EH1' THEN 'Edinburgh'
+    END AS city
 FROM office_locations
-WHERE country = 'United Kingdom'
-  AND opening_time BETWEEN 8 AND 9
-  AND postcode IN ('EH1', 'BN1', 'NN1', 'KW1');
+WHERE
+    country = 'United Kingdom'
+    AND opening_time BETWEEN 8 AND 9
+    AND postcode IN ('EH1', 'BN1', 'NN1', 'KW1');
 ```
 
 ---
@@ -284,9 +304,9 @@ CREATE TABLE staff (
     staff_num      INT(5)       NOT NULL,
     first_name     VARCHAR(100) NOT NULL,
     pens_in_drawer INT(2)       NOT NULL
-                   DEFAULT 1
-                   CONSTRAINT pens_in_drawer_range
-                   CHECK (pens_in_drawer BETWEEN 1 AND 99)
+        DEFAULT 1
+        CONSTRAINT pens_in_drawer_range
+        CHECK (pens_in_drawer BETWEEN 1 AND 99)
 );
 ```
 
