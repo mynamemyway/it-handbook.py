@@ -1,24 +1,20 @@
 # System
+archive/
 .vscode/
+.DS_Store
 .pytest_cache
 __pycache__/
-.DS_Store
 
 # Data base
 *.grist
 *.sql
 *.db
 
-# For me
-*me
+# For me / for dev
+_*
 *me.*
 *tmp*
-*tmp.*
-*temp*
-*temp.*
-*archive
 
-# Obsidian
-.obsidian/workspace.json
-.obsidian/workspace-mobile.json
+# Obsisidan
 .obsidian/
+.airsync/conflicts/
