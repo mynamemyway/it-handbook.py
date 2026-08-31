@@ -652,13 +652,15 @@ FROM book;
    SELECT COUNT(id) AS books_count FROM books;
    ```
 3. **Устранение конфликтов в `JOIN`:** Разделение колонок с одинаковыми именами из разных таблиц, чтобы Python-код не запутался в данных. Также используется для сокращения имен самих таблиц.
-   ```sql
-   SELECT 
-       b.name AS book_name,
-       a.name AS author_name
-   FROM books AS b
-   JOIN authors AS a ON b.author_id = a.id;
-   ```
+
+```sql
+SELECT 
+    b.name AS book_name,    -- Шаг 4: Из склеенных строк берем name книги и называем book_name
+    a.name AS author_name   -- Шаг 5: Из склеенных строк берем name автора и называем author_name
+FROM books AS b             -- Шаг 1: Заходим в таблицу books и даем ей псевдоним b
+JOIN authors AS a           -- Шаг 2: Находим вторую таблицу authors и даем ей псевдоним a
+ON b.author_id = a.id;      -- Шаг 3: Склеиваем строки, где ID автора в книге совпал с ID в авторах
+```
 
 ---
 
