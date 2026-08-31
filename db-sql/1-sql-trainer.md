@@ -655,12 +655,19 @@ FROM book;
 
 ```sql
 SELECT 
-    b.name AS book_name,    -- Шаг 4: Из склеенных строк берем name книги и называем book_name
-    a.name AS author_name   -- Шаг 5: Из склеенных строк берем name автора и называем author_name
-FROM books AS b             -- Шаг 1: Заходим в таблицу books и даем ей псевдоним b
-JOIN authors AS a           -- Шаг 2: Находим вторую таблицу authors и даем ей псевдоним a
-ON b.author_id = a.id;      -- Шаг 3: Склеиваем строки, где ID автора в книге совпал с ID в авторах
+    b.name AS book_name,   -- Шаг 4
+    a.name AS author_name  -- Шаг 5
+FROM books AS b            -- Шаг 1
+JOIN authors AS a          -- Шаг 2
+ON b.author_id = a.id;     -- Шаг 3
 ```
+
+**Пояснение шагов**
+1. `FROM books AS b` — Заходим в таблицу `books` и даем ей псевдоним `b`.
+2. `JOIN authors AS a` — Находим таблицу `authors` и даем ей псевдоним `a`.
+3. `ON b.author_id = a.id;` — Склеивает строки, где ID автора в `books` = ID в `authors`.
+4. `b.name AS book_name` — Из склеенных строк выводим `name` книги как `book_name`.
+5. `a.name AS author_name` — Из склеенных строк выводим `name` автора как `author_name`.
 
 ---
 
