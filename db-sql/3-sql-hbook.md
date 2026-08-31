@@ -51,6 +51,7 @@ CREATE TABLE author (
 );
 INSERT INTO author (`author_name`) VALUES ('Достоевский Ф.М.');
 ```
+
 **SQLite3**
 ```sql
 CREATE TABLE author (
@@ -59,6 +60,8 @@ CREATE TABLE author (
 );
 INSERT INTO author (`author_name`) VALUES ('Достоевский Ф.М.');
 ```
+
+
 **SQLite before v3.0**
 ```sql
 CREATE TABLE author (
@@ -67,6 +70,8 @@ CREATE TABLE author (
 );
 INSERT INTO author (`author_id`, `author_name`) VALUES (NULL, 'Достоевский Ф.М.');
 ```
+
+
 **PostgreSQL**
 ```sql
 CREATE TABLE author (
@@ -200,3 +205,16 @@ WHERE ...
 ```
 
 ---
+
+## 📑 Справочник ключевых различий: MySQL vs SQLite
+
+| Действие / Функция | Как писать в MySQL (в курсе) | Как писать в SQLite (в IDE) | В чем подвох? |
+|---|---|---|---|
+| Автоинкремент ID | AUTO_INCREMENT | AUTOINCREMENT | В SQLite пишется слитно. Вставляется только вместе с INTEGER PRIMARY KEY. |
+| Ограничение строк | LIMIT 10 | LIMIT 10 | Здесь они, к счастью, одинаковы (а вот в MS SQL было бы TOP 10). |
+| Текущая дата и время | NOW() | datetime('now') или CURRENT_TIMESTAMP | В MySQL это простая функция, в SQLite — это вызов специальной функции форматирования времени. |
+| Склеивание строк | CONCAT(first, last) | first || last | MySQL использует функцию CONCAT(). SQLite использует стандартный оператор «две вертикальные черты» ` |
+| Если значение NULL | IFNULL(val, 0) | IFNULL(val, 0) или COALESCE(val, 0) | В обеих базах работает IFNULL, но COALESCE — более универсальный стандарт. |
+| Типы данных (Текст) | VARCHAR(255) или TEXT | TEXT | В MySQL критично указывать длину строки (VARCHAR). SQLite плевать на длину, там всегда используется просто TEXT. |
+| Типы данных (Логика) | BOOLEAN (хранит 0 или 1) | INTEGER (нет явного Boolean, хранит 0 или 1) | В SQLite физически нет типа BOOLEAN, вместо него пишут INTEGER. |
+
