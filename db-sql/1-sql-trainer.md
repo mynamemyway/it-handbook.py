@@ -1654,7 +1654,7 @@ GROUP BY author;
 -- Все записи c уникальными значениями для выбранного поля (GROUP BY)
 SELECT * 
 FROM book
-GROUP BY price;
+GROUP BY amount;
 ```
 
 ---
@@ -1678,7 +1678,7 @@ GROUP BY author;
 
 1. В таблице `book` определяются строки, в которых в столбце `author` одинаковые значения:
 
-![](/assets/images/sql/image_1_3_1.tiff)
+![](/assets/images/sql/image_1_3_1.png)
 
 Получили 3 различные группы:
 
