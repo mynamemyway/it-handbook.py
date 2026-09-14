@@ -4398,4 +4398,13 @@ SET sum_fine = (
 WHERE f.sum_fine IS NULL;
 ```
 
+
+Запрос компактный (только MySQL)
+```sql
+UPDATE fine AS f, traffic_violation AS tv
+SET f.sum_fine = tv.sum_fine
+WHERE f.sum_fine IS NULL AND f.violation = tv.violation;
+```
+
 ---
+
