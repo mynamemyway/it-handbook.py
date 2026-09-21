@@ -4941,11 +4941,10 @@ WHERE таблица_1.поле1 = таблица_2.поле1;
 **Обновление с явным JOIN (ANSI / PostgreSQL style):**
 ```sql
 UPDATE таблица_1
-... JOIN таблица_2
-ON выражение
-...
-SET ...
-WHERE ...;
+[тип_джоина] JOIN таблица_2   -- Тип связи (INNER / LEFT / RIGHT / FULL)
+ON выражение                  -- Условия связи (например: таблица_1.id = таблица_2.id)
+SET ...                       -- Какое поле обновляем (например: fine.date_payment = payment.date_payment)
+WHERE ...;                    -- Фильтр строк (например: fine.date_payment IS NULL);
 ```
 *(Примечание: в PostgreSQL синтаксис `UPDATE ... FROM ... WHERE ...`)*
 
