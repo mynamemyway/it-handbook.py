@@ -4857,6 +4857,10 @@ Affected rows: 4
 DESC имя_таблицы;
 ```
 
+```sql
+SHOW COLUMNS FROM имя_таблицы;
+```
+
 **Для PostgreSQL:**
 ```sql
 \d имя_таблицы;
