@@ -518,7 +518,7 @@ VALUES
 ```sql
 SELECT ...
 FROM таблица_1
-INNER JOIN таблица_2 ON условие
+    INNER JOIN таблица_2 ON условие
 ...
 ```
 
@@ -539,7 +539,7 @@ SELECT
     title,
     name_author
 FROM book -- 1. Что ищем? (Главная таблица)
-INNER JOIN author ON book.author_id = author.author_id; -- 2. Чем дополняем? Авторами (Справочник)
+    INNER JOIN author ON book.author_id = author.author_id; -- 2. Чем дополняем? Авторами (Справочник)
 ```
 
 ```sql - Зеркальный аналог
@@ -547,14 +547,14 @@ SELECT
     title,
     name_author
 FROM author
-INNER JOIN book ON author.author_id = book.author_id;
+    INNER JOIN book ON author.author_id = book.author_id;
 ```
 
 ```sql - Перевод на русский
 ВЫВЕСТИ: Название книги, Имя автора
 ИЗ ТАБЛИЦЫ: Книги
-СОЕДИНИВ С ТАБЛИЦЕЙ: Авторы
-ПО ПРАВИЛУ: ID автора в таблице Книги равен ID автора в таблице Авторы
+    СОЕДИНИВ С ТАБЛИЦЕЙ: Авторы
+        ПО ПРАВИЛУ: ID автора в таблице Книги равен ID автора в таблице Авторы
 ```
 
 Поскольку поля `author_id` в таблицах `book` и `author` называются одинаково, необходимо в запросах указывать полную ссылку на них (`book.author_id` и `author.author_id`).
@@ -614,8 +614,7 @@ SELECT
     genre.name_genre,
     book.price
 FROM book
-INNER JOIN genre 
-    ON book.genre_id = genre.genre_id
+    INNER JOIN genre ON book.genre_id = genre.genre_id
 WHERE book.amount > 8
 ORDER BY book.price DESC;
 ```
@@ -643,9 +642,9 @@ ORDER BY book.price DESC;
 #### Пример синтаксиса:
 ```sql
 FROM table_a
-INNER JOIN table_b 
-    ON table_a.key_1 = table_b.key_1
-   AND table_a.key_2 = table_b.key_2  -- Дополнительное условие
+    INNER JOIN table_b 
+        ON table_a.key_1 = table_b.key_1
+        AND table_a.key_2 = table_b.key_2  -- Дополнительное условие
 ```
 
 ---
@@ -657,8 +656,8 @@ INNER JOIN table_b
 #### Пример синтаксиса:
 ```sql
 FROM table_a
-INNER JOIN table_b ON table_a.b_id = table_b.id  -- Соединяем первую пару
-INNER JOIN table_c ON table_a.c_id = table_c.id  -- Подключаем третью таблицу
+    INNER JOIN table_b ON table_a.b_id = table_b.id  -- Соединяем первую пару
+    INNER JOIN table_c ON table_a.c_id = table_c.id  -- Подключаем третью таблицу
 ```
 
 ---
