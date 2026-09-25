@@ -534,12 +534,27 @@ INNER JOIN таблица_2 ON условие
 
 Запрос:
 
-```sql
+```sql - Логичный порядок
+SELECT
+    title,
+    name_author
+FROM book -- 1. Что ищем? (Главная таблица)
+INNER JOIN author ON book.author_id = author.author_id; -- 2. Чем дополняем? Авторами (Справочник)
+```
+
+```sql - Зеркальный аналог
 SELECT
     title,
     name_author
 FROM author
 INNER JOIN book ON author.author_id = book.author_id;
+```
+
+```sql - Перевод на русский
+ВЫВЕСТИ: Название книги, Имя автора
+ИЗ ТАБЛИЦЫ: Книги
+СОЕДИНИВ С ТАБЛИЦЕЙ: Авторы
+ПО ПРАВИЛУ: ID автора в таблице Книги равен ID автора в таблице Авторы
 ```
 
 Поскольку поля `author_id` в таблицах `book` и `author` называются одинаково, необходимо в запросах указывать полную ссылку на них (`book.author_id` и `author.author_id`).
@@ -647,3 +662,4 @@ INNER JOIN table_c ON table_a.c_id = table_c.id  -- Подключаем тре�
 ```
 
 ---
+
