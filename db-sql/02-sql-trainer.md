@@ -522,6 +522,14 @@ FROM таблица_1
 ...
 ```
 
+```sql - Аналог
+SELECT ...
+FROM таблица_1
+INNER JOIN таблица_2
+ON условие
+...
+```
+
 Результат запроса формируется так:
 
 - Каждая строка одной таблицы сопоставляется с каждой строкой второй таблицы;
@@ -534,7 +542,7 @@ FROM таблица_1
 
 Запрос:
 
-```sql - Логичный порядок
+```sql - Логичный порядок с отступами
 SELECT
     title,
     name_author
@@ -550,11 +558,20 @@ FROM author
     INNER JOIN book ON author.author_id = book.author_id;
 ```
 
+```sql - Простой читаемый
+SELECT
+    title,
+    name_author
+FROM book                              -- 1. Что ищем? (Главная таблица)
+INNER JOIN author                      -- 2. Чем дополняем? Авторами (Справочник)
+ON book.author_id = author.author_id;  -- 3. По какому правилу соединяем?
+```
+
 ```sql - Перевод на русский
 ВЫВЕСТИ: Название книги, Имя автора
 ИЗ ТАБЛИЦЫ: Книги
-    СОЕДИНИВ С ТАБЛИЦЕЙ: Авторы
-        ПО ПРАВИЛУ: ID автора в таблице Книги равен ID автора в таблице Авторы
+СОЕДИНИВ С ТАБЛИЦЕЙ: Авторы
+ПО ПРАВИЛУ: ID автора в таблице Книги равен ID автора в таблице Авторы
 ```
 
 Поскольку поля `author_id` в таблицах `book` и `author` называются одинаково, необходимо в запросах указывать полную ссылку на них (`book.author_id` и `author.author_id`).
@@ -762,6 +779,14 @@ SELECT
     name_genre
 FROM genre
     LEFT JOIN book ON genre.genre_id = book.genre_id
+WHERE book.genre_id IS NULL;
+```
+
+```sql - Аналог
+SELECT name_genre
+FROM genre
+LEFT JOIN book
+ON genre.genre_id = book.genre_id
 WHERE book.genre_id IS NULL;
 ```
 
