@@ -1803,5 +1803,41 @@ WHERE book.genre_id IN (SELECT genre_id FROM res_genre)
 ORDER BY title;
 ```
 
+
+Альтернатива от студента 1
+```sql
+SELECT title, name_author, name_genre, price, amount
+FROM author
+INNER JOIN book ON author.author_id = book.author_id
+INNER JOIN genre ON book.genre_id = genre.genre_id
+WHERE book.genre_id IN (
+    SELECT genre_id
+    FROM book
+    GROUP BY genre_id
+    HAVING SUM(amount) >= ALL(SELECT SUM(amount) FROM book GROUP BY genre_id)
+)
+ORDER BY title;
+```
+
+Альтернатива от студента 2
+```sql
+SELECT title, name_author, name_genre, price, amount
+FROM genre
+    JOIN book USING(genre_id)
+    JOIN author USING(author_id)
+WHERE genre_id IN (
+    SELECT genre_id
+    FROM book 
+    GROUP BY genre_id
+    HAVING SUM(amount) = (
+        SELECT SUM(amount) AS sum_amount
+        FROM book
+        GROUP BY genre_id
+        ORDER BY sum_amount DESC
+        LIMIT 1)
+    )
+ORDER BY title;
+```
+
 ---
 
