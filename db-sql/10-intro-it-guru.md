@@ -1458,3 +1458,271 @@ FROM players;
 `WHERE` позволяет заранее ограничить набор строк, которые попадут в вычисления, тем самым уменьшая объём данных для агрегации.
 
 ---
+
+## Шпаргалка
+
+Всё, что мы разобрали в курсе, собрано на одной странице: ключевые слова, операторы, функции и готовые шаблоны запросов к таблице `players`.
+
+### Скелет запроса
+
+```sql
+SELECT [DISTINCT] column_1, column_2, ...
+FROM players
+WHERE condition
+GROUP BY column_1, column_2
+HAVING group_condition
+ORDER BY column_1 [ASC | DESC]
+LIMIT count [OFFSET start];
+```
+
+**Порядок выполнения частей запроса** (логический, независимо от порядка записи):
+
+```text
+FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT
+```
+
+### Ключевые слова
+
+| Ключевое слово | Назначение |
+|----------------|------------|
+| `SELECT` | Выбрать столбцы, которые попадут в результат |
+| `*` | Все столбцы таблицы сразу |
+| `FROM` | Указать таблицу-источник данных |
+| `AS` | Псевдоним для столбца или таблицы |
+| `DISTINCT` | Убрать дублирующиеся значения |
+| `WHERE` | Отфильтровать строки до группировки |
+| `GROUP BY` | Объединить строки в группы |
+| `HAVING` | Отфильтровать уже готовые группы |
+| `ORDER BY` | Отсортировать результат |
+| `ASC` / `DESC` | Направление сортировки |
+| `LIMIT` | Ограничить количество строк в выводе |
+| `OFFSET` | Пропустить N строк (пагинация) |
+
+### Операторы сравнения
+
+| Оператор | Значение | Пример |
+|----------|----------|--------|
+| `=` | Равно | `WHERE rank_title = 'Gold'` |
+| `<>` | Не равно | `WHERE city <> 'Москва'` |
+| `>` | Больше | `WHERE level > 40` |
+| `<` | Меньше | `WHERE wins < 10` |
+| `>=` | Больше или равно | `WHERE level >= 50` |
+| `<=` | Меньше или равно | `WHERE rating <= 2500` |
+
+### Логические операторы
+
+| Оператор | Значение | Пример |
+|----------|----------|--------|
+| `AND` | Оба условия должны быть true | `WHERE level > 40 AND rank_title = 'Gold'` |
+| `OR` | Хотя бы одно условие true | `WHERE city = 'Москва' OR city = 'Омск'` |
+| `NOT` | Отрицание условия | `WHERE guild IS NOT NULL` |
+| `( )` | Приоритет скобок | `WHERE (guild = 'A' OR guild = 'B') AND rating > 2000` |
+
+### Специальные операторы WHERE
+
+| Оператор | Что делает | Пример |
+|----------|-----------|--------|
+| `BETWEEN ... AND ...` | Значение в диапазоне (границы включены) | `WHERE rating BETWEEN 1500 AND 2500` |
+| `IN (...)` | Значение есть в списке | `WHERE city IN ('Москва', 'Омск')` |
+| `NOT IN (...)` | Значения нет в списке | `WHERE registration_date NOT IN ('2025-01-15', '2025-02-10')` |
+| `LIKE` | Поиск по шаблону текста | `WHERE email LIKE '%@yandex.ru'` |
+| `NOT LIKE` | Не соответствует шаблону | `WHERE email NOT LIKE '%@yandex.ru'` |
+| `IS NULL` | Значение отсутствует (`NULL`) | `WHERE guild IS NULL` |
+| `IS NOT NULL` | Значение есть | `WHERE guild IS NOT NULL` |
+
+> В шаблонах `LIKE` знак `%` означает любое количество любых символов. В курсе мы разбирали только этот один символ-шаблон.
+
+### Арифметические операторы
+
+| Оператор | Операция | Пример |
+|----------|----------|--------|
+| `+` | Сложение | `(wins + losses) AS total_games` |
+| `-` | Вычитание | `(wins - losses) AS win_difference` |
+| `*` | Умножение | `(wins * 10) AS bonus_gold` |
+| `/` | Деление | `(wins / level) AS wins_per_level` |
+| `%` | Остаток от деления | `wins % 2` |
+
+### Агрегатные функции
+
+| Функция | Возвращает | Пример |
+|---------|-----------|--------|
+| `COUNT(*)` | Количество всех строк | `SELECT COUNT(*) FROM players;` |
+| `COUNT(column)` | Количество непустых значений столбца | `COUNT(id) AS players_count` |
+| `SUM(column)` | Сумма значений | `SELECT SUM(wins) FROM players;` |
+| `AVG(column)` | Среднее арифметическое | `SELECT AVG(rating) FROM players;` |
+| `MIN(column)` | Минимальное значение | `SELECT MIN(level) FROM players;` |
+| `MAX(column)` | Максимальное значение | `SELECT MAX(wins) FROM players;` |
+
+### Вспомогательные функции
+
+| Функция | Назначение | Пример |
+|---------|-----------|--------|
+| `ROUND(value, n)` | Округлить число до `n` знаков после запятой | `ROUND(AVG(level), 1) AS avg_level` |
+
+### Типы данных
+
+| Тип | Для чего | Пример в таблице `players` |
+|-----|----------|---------------------------|
+| `INT` | Целые числа | `id`, `level`, `rating`, `wins`, `losses` |
+| `VARCHAR(n)` | Текст переменной длины (до `n` символов) | `nickname VARCHAR(50)`, `email VARCHAR(100)` |
+| `DECIMAL(p, s)` | Числа с дробной частью (всего `p` знаков, из них `s` после запятой) | `win_rate DECIMAL(5,2)` |
+| `DATE` | Дата в формате `ГГГГ-ММ-ДД` | `registration_date` |
+| `NULL` | Отсутствие значения (не 0 и не пустая строка) | `guild` у игрока `CatQueen` |
+
+### Комментарии в коде
+
+```sql
+-- однострочный комментарий
+SELECT * FROM players; -- комментарий в конце строки
+```
+
+### Готовые шаблоны запросов
+
+#### Все столбцы
+
+```sql
+SELECT * FROM players;
+```
+
+#### Только нужные столбцы
+
+```sql
+SELECT nickname, level, rating
+FROM players;
+```
+
+#### Уникальные значения
+
+```sql
+SELECT DISTINCT city
+FROM players;
+```
+
+```sql
+SELECT DISTINCT rank_title, guild
+FROM players;
+```
+
+#### Топ-3 по рейтингу
+
+```sql
+SELECT nickname, level, rating
+FROM players
+ORDER BY rating DESC
+LIMIT 3;
+```
+
+#### Постраничный вывод: первая страница и вторая
+
+```sql
+SELECT nickname, level, rating
+FROM players
+ORDER BY rating DESC
+LIMIT 3;
+```
+
+```sql
+SELECT nickname, level, rating
+FROM players
+ORDER BY rating DESC
+LIMIT 3 OFFSET 3;
+```
+
+#### Сортировка
+
+```sql
+ORDER BY level ASC;           -- по возрастанию
+```
+
+```sql
+ORDER BY rating DESC;         -- по убыванию
+```
+
+```sql
+ORDER BY city ASC,            -- по нескольким столбцам
+         rating DESC;
+```
+
+#### Фильтрация
+
+```sql
+SELECT * FROM players WHERE rank_title = 'Silver';
+```
+
+```sql
+SELECT nickname, level, rank_title
+FROM players
+WHERE level > 40
+  AND rank_title = 'Gold';
+```
+
+```sql
+SELECT nickname, guild, rating, last_login
+FROM players
+WHERE (guild = 'Грифоны Эрафии' OR guild = 'Фениксы Конфлюкса')
+  AND rating > 2000
+  AND last_login > '2026-06-01';
+```
+
+#### Псевдонимы (AS)
+
+```sql
+SELECT id AS player_id,
+       nickname AS player_name,
+       level AS player_level
+FROM players;
+```
+
+```sql
+SELECT p.id,
+       p.nickname AS player_name,
+       p.city
+FROM players AS p;
+```
+
+#### Группировка и агрегаты
+
+```sql
+SELECT city,
+       ROUND(AVG(level), 1) AS avg_level
+FROM players
+GROUP BY city;
+```
+
+```sql
+SELECT rank_title,
+       COUNT(id) AS players_count
+FROM players
+GROUP BY rank_title;
+```
+
+#### Фильтрация групп и сортировка по итогу
+
+```sql
+SELECT rank_title,
+       COUNT(id) AS players_count
+FROM players
+GROUP BY rank_title
+HAVING COUNT(id) > 10
+ORDER BY players_count DESC;
+```
+
+#### Группировка по нескольким полям
+
+```sql
+SELECT registration_date, level, COUNT(id) AS players_count
+FROM players
+GROUP BY registration_date, level;
+```
+
+### Золотые правила курса
+
+1. Порядок частей запроса: `FROM` → `WHERE` → `GROUP BY` → `HAVING` → `SELECT` → `ORDER BY` → `LIMIT`.
+2. `WHERE` фильтрует строки, `HAVING` фильтрует группы. Всегда сначала `WHERE`, потом `GROUP BY`, потом `HAVING`.
+3. В `GROUP BY` указываем все неагрегированные столбцы из `SELECT`.
+4. Пустое значение — это `NULL`. Сравнивать с ним нужно только через `IS NULL` / `IS NOT NULL`, а не через `= NULL`.
+5. Текст и даты в запросах пишем в одинарных кавычках: `'Gold'`, `'2025-01-15'`.
+6. Ключевые слова пишем заглавными буквами, столбцы и таблицы — со строчной.
+7. Один столбец в `SELECT` — пишем без запятых в конце строки.
+
+---
