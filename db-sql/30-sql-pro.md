@@ -1024,12 +1024,14 @@ WHERE population > 10000;
 > - **NN** (`Not Null`) – столбец не может быть `NULL`.
 > - **AI** (`Auto Increment`) – автоинкремент (`id` будет увеличиваться автоматически на единицу).
 
-![](/)
+![](/assets/images/sql/sql-pro/3-2-1.png)
 
 Нажмите **Apply** → откроется окно с SQL-кодом.
 Нажмите **Apply** → **Finish**.
 
-![](/)
+![](/assets/images/sql/sql-pro/3-2-2-1.png)
+
+![](/assets/images/sql/sql-pro/3-2-2.png)
 
 Т.е. за кадром генерируется вот такой SQL-скрипт для создания таблицы:
 
