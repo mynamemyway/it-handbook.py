@@ -1086,3 +1086,4 @@ CREATE TABLE `stepik`.`employees` (
 После нажатия **Execute**, таблица удалится.
 
 ---
+
