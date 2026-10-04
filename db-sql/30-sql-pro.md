@@ -1342,11 +1342,11 @@ CREATE TABLE clients
 
 CREATE TABLE sms_logs
 (
-    id                  INT PRIMARY KEY AUTO_INCREMENT,
-    client_id     	INT,
-    created  		DATETIME,
-    phone_number 	VARCHAR(20),
-    message 		VARCHAR(50),
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    client_id INT,
+    created DATETIME,
+    phone_number VARCHAR(20),
+    message VARCHAR(50),
     FOREIGN KEY (client_id) REFERENCES clients (id)
 );
 ```
