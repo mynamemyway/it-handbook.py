@@ -1704,5 +1704,64 @@ CREATE TABLE IF NOT EXISTS user_courses (
 );
 ```
 
+Необходимо написать запрос, который выполняет последовательно следующие шаги:
+
+1. Удалить схему (БД) stepik, если она существует;
+2. Создать схему (БД) stepik;
+3. Использовать БД stepik (явно указать USE);
+4. Удалить таблицу users, если она существует;
+5. Создать таблицу users ;
+6. Удалить таблицу courses, если она существует;
+7. Создать таблицу courses ;
+8. Удалить таблицу user_courses, если она существует;
+9. Создать таблицу user_courses;
+
+```sql
+DROP SCHEMA IF EXISTS stepik;
+CREATE SCHEMA stepik;
+USE stepik;
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    full_name VARCHAR(50) NOT NULL,
+    details VARCHAR(50),
+    join_date DATE NOT NULL,
+    avatar TEXT,
+    is_active BOOLEAN NOT NULL,
+    knowledge INT NOT NULL DEFAULT 0,
+    reputation INT NOT NULL DEFAULT 0,
+    followers_count INT NOT NULL DEFAULT 0,
+    days_without_break INT NOT NULL DEFAULT 0,
+    days_without_break_max INT NOT NULL DEFAULT 0,
+    solved_tasks INT NOT NULL DEFAULT 0
+);
+
+DROP TABLE IF EXISTS courses; 
+CREATE TABLE courses (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(50) NOT NULL,
+  created_date DATE NOT NULL,
+  summary TEXT,
+  photo TEXT,
+  price DECIMAL NOT NULL  
+);
+
+DROP TABLE IF EXISTS user_courses; 
+CREATE TABLE user_courses (
+  user_id INT,
+  course_id INT,
+  is_favorite BOOLEAN NOT NULL,
+  is_pinned BOOLEAN NOT NULL,
+  is_archived BOOLEAN NOT NULL,
+  last_viewed DATE NOT NULL,
+  PRIMARY KEY (user_id, course_id),
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (course_id) REFERENCES courses(id)
+);
+```
+
+![](/assets/images/sql/sql-pro/3-2-9.png)
+
 ---
 
