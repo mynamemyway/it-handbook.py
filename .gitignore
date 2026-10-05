@@ -7,7 +7,7 @@ __pycache__/
 
 # Data base
 *.grist
-*.sql
+# *.sql
 *.db
 
 # For me / for dev
