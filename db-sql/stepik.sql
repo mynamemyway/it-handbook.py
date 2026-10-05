@@ -17,3 +17,24 @@ CREATE TABLE IF NOT EXISTS users (
     days_without_break_max INT NOT NULL DEFAULT 0, 
     solved_tasks INT NOT NULL DEFAULT 0 
 );
+
+CREATE TABLE IF NOT EXISTS courses (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(50) NOT NULL,
+    created_date DATE NOT NULL,
+    summary TEXT,
+    photo TEXT,
+    price DECIMAL NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS user_courses (
+    user_id INT NOT NULL,
+    course_id INT NOT NULL,
+    is_favorite BOOLEAN NOT NULL,
+    is_pinned BOOLEAN NOT NULL,
+    is_archived BOOLEAN NOT NULL,
+    last_viewed DATE NOT NULL,
+    PRIMARY KEY (user_id, course_id),
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (course_id) REFERENCES courses (id)
+);
