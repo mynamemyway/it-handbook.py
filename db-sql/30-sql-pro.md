@@ -2603,3 +2603,95 @@ SELECT * FROM computers;
 ```
 
 ---
+
+### Итог: Основные операторы SQL
+
+Итого, мы уже изучили основные операторы `SQL`. Еще раз повторим их все на примере.
+
+#### Data Definition Language (`DDL`). Работа с БД и таблицами.
+
+В эту группу входят следующие операторы:
+- `CREATE` – используется для создания объектов БД;
+- `ALTER` – используется для изменения объектов БД;
+- `DROP` – используется для удаления объектов БД.
+
+#### Data Query Language (`DQL`). Извлечение данных.
+
+В эту группу входит единственный оператор:
+- `SELECT` – осуществляет выборку данных;
+
+#### Data Manipulation Language (`DML`). Работа с записями.
+
+В эту группу входят следующие операторы:
+- `INSERT` – добавляет новые данные;
+- `UPDATE` – изменяет существующие данные;
+- `DELETE` – удаляет данные.
+
+---
+
+#### Пример последовательности операций
+
+Сначала мы создадим таблицу `products` с помощью оператора `CREATE`:
+
+```sql
+CREATE TABLE products (
+  id INT PRIMARY KEY,
+  name VARCHAR(255),
+  price DECIMAL(10, 2),
+  quantity INT
+);
+```
+
+Затем добавим несколько продуктов в таблицу с помощью оператора `INSERT`:
+
+```sql
+INSERT INTO products (id, name, price, quantity) VALUES
+(1, 'Apple', 0.5, 100),
+(2, 'Banana', 0.3, 200),
+(3, 'Orange', 0.7, 50);
+```
+
+Теперь выберем все продукты из таблицы с помощью оператора `SELECT`:
+
+```sql
+SELECT * FROM products;
+```
+
+Результат:
+
+| id | name   | price | quantity |
+|----|--------|-------|----------|
+| 1  | Apple  | 0.50  | 100      |
+| 2  | Banana | 0.30  | 200      |
+| 3  | Orange | 0.70  | 50       |
+
+Изменим цену бананов на `0.35` с помощью оператора `UPDATE`:
+
+```sql
+UPDATE products 
+SET price = 0.35 
+WHERE name = 'Banana';
+```
+
+Теперь удалим все апельсины из таблицы с помощью оператора `DELETE`:
+
+```sql
+DELETE FROM products 
+WHERE name = 'Orange';
+```
+
+После этого добавим новый столбец `supplier_id` в таблицу `products` с помощью оператора `ALTER`:
+
+```sql
+ALTER TABLE products 
+ADD COLUMN supplier_id INT;
+```
+
+И наконец, удалим таблицу `products` из базы данных с помощью оператора `DROP`: 
+
+```sql
+DROP TABLE products;
+```
+
+---
+
