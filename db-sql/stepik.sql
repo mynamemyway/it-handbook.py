@@ -3,22 +3,23 @@ CREATE SCHEMA stepik;
 USE stepik;
 
 DROP TABLE IF EXISTS users;
-CREATE TABLE IF NOT EXISTS users ( 
-    id INT PRIMARY KEY AUTO_INCREMENT, 
-    full_name VARCHAR(50) NOT NULL, 
-    details VARCHAR(50), 
-    join_date DATE NOT NULL, 
-    avatar TEXT, 
-    is_active BOOLEAN NOT NULL, 
-    knowledge INT NOT NULL DEFAULT 0, 
-    reputation INT NOT NULL DEFAULT 0, 
-    followers_count INT NOT NULL DEFAULT 0, 
-    days_without_break INT NOT NULL DEFAULT 0, 
-    days_without_break_max INT NOT NULL DEFAULT 0, 
-    solved_tasks INT NOT NULL DEFAULT 0 
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    full_name VARCHAR(50) NOT NULL,
+    details VARCHAR(50),
+    join_date DATE NOT NULL,
+    avatar TEXT,
+    is_active BOOLEAN NOT NULL,
+    knowledge INT NOT NULL DEFAULT 0,
+    reputation INT NOT NULL DEFAULT 0,
+    followers_count INT NOT NULL DEFAULT 0,
+    days_without_break INT NOT NULL DEFAULT 0,
+    days_without_break_max INT NOT NULL DEFAULT 0,
+    solved_tasks INT NOT NULL DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS courses (
+DROP TABLE IF EXISTS courses;
+CREATE TABLE courses (
     id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     created_date DATE NOT NULL,
@@ -27,16 +28,44 @@ CREATE TABLE IF NOT EXISTS courses (
     price DECIMAL NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS user_courses (
-    user_id INT NOT NULL,
-    course_id INT NOT NULL,
+DROP TABLE IF EXISTS user_courses;
+CREATE TABLE user_courses (
+    user_id INT,
+    course_id INT,
     is_favorite BOOLEAN NOT NULL,
     is_pinned BOOLEAN NOT NULL,
     is_archived BOOLEAN NOT NULL,
     last_viewed DATE NOT NULL,
-    PRIMARY KEY (user_id, course_id),
-    FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (course_id) REFERENCES courses (id)
+    PRIMARY KEY (user_id , course_id),
+    FOREIGN KEY (user_id)
+        REFERENCES users (id),
+    FOREIGN KEY (course_id)
+        REFERENCES courses (id)
+);
+
+DROP TABLE IF EXISTS courses_authors;
+CREATE TABLE courses_authors (
+    course_id INT,
+    user_id INT,
+    PRIMARY KEY (course_id , user_id),
+    FOREIGN KEY (course_id)
+        REFERENCES courses (id),
+    FOREIGN KEY (user_id)
+        REFERENCES users (id)
+);
+
+DROP TABLE IF EXISTS certificates;
+CREATE TABLE certificates (
+    user_id INT,
+    course_id INT,
+    grade INT NOT NULL,
+    issue_date DATE NOT NULL,
+    url TEXT NOT NULL,
+    PRIMARY KEY (user_id , course_id),
+    FOREIGN KEY (user_id)
+        REFERENCES users (id),
+    FOREIGN KEY (course_id)
+        REFERENCES courses (id)
 );
 
 INSERT INTO users (full_name, details, join_date, avatar, is_active, knowledge, reputation, followers_count, days_without_break, days_without_break_max, solved_tasks)
