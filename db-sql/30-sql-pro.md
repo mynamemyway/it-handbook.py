@@ -3776,10 +3776,6 @@ SELECT SUBSTRING_INDEX("https://stepik.org", '//', 1);
 * **Положительное число (`count > 0`):** идет **слева направо**, считает разделители и забирает всё, что находится **ДО** указанного разделителя.
 * **Отрицательное число (`count < 0`):** идет **справа налево** (с конца), считает разделители и забирает всё, что находится **ПОСЛЕ** указанного разделителя.
 
----
-
-### Примеры для конспекта
-
 **1. Отсчет слева (положительный count)**
 
 ```sql
@@ -3787,7 +3783,6 @@ SELECT SUBSTRING_INDEX("https://stepik.org", '//', 1);
 SELECT SUBSTRING_INDEX('one.two.three.four', '.', 1);
 -- Результат:
 +-------+
-
 | one   |
 +-------+
 
@@ -3795,7 +3790,6 @@ SELECT SUBSTRING_INDEX('one.two.three.four', '.', 1);
 SELECT SUBSTRING_INDEX('one.two.three.four', '.', 2);
 -- Результат:
 +---------+
-
 | one.two |
 +---------+
 ```
@@ -3807,7 +3801,6 @@ SELECT SUBSTRING_INDEX('one.two.three.four', '.', 2);
 SELECT SUBSTRING_INDEX('one.two.three.four', '.', -1);
 -- Результат:
 +--------+
-
 | four   |
 +--------+
 
@@ -3815,7 +3808,6 @@ SELECT SUBSTRING_INDEX('one.two.three.four', '.', -1);
 SELECT SUBSTRING_INDEX('one.two.three.four', '.', -2);
 -- Результат:
 +------------+
-
 | three.four |
 +------------+
 ```
@@ -3828,7 +3820,6 @@ SELECT SUBSTRING_INDEX('one.two.three.four', '.', -2);
 SELECT SUBSTRING_INDEX(SUBSTRING_INDEX('one.two.three.four', '.', 3), '.', -1);
 -- Результат:
 +-------+
-
 | three |
 +-------+
 ```
@@ -3837,7 +3828,10 @@ SELECT SUBSTRING_INDEX(SUBSTRING_INDEX('one.two.three.four', '.', 3), '.', -1);
 
 #### TRIM(str)
 
-Эта функция удаляет пробелы в начале и в конце строки.
+**TRIM()** — удаляет лишние символы или пробелы с начала и конца строки.
+
+* **`TRIM(str)`** — удаляет пробелы по умолчанию.
+* **`TRIM(substr FROM str)`** — удаляет указанное вхождение в строку. `FROM` — обязательный разделитель.
 
 ```sql
 SELECT TRIM('  привет мир  ');
@@ -3854,6 +3848,26 @@ SELECT TRIM('  привет мир  ');
 > Если в функцию `TRIM()` передать первым параметром символ, то он будет удален в начале и конце переданной строки. Символ будет удаляться, пока будет присутствовать в начале и конце строки. Также в качестве аргумента можно передать строку, работает аналогично:
 > - `TRIM('x' FROM 'xxhello worldxx')` вернет `hello world`.
 > - `TRIM('123' FROM '123hello world123')` вернет `hello world`.
+
+**1. Удаление пробелов:**
+```sql
+SELECT CHAR_LENGTH(TRIM('   Hello World   ')) AS length;
+-- Результат:
++--------+
+| length |
++--------+
+| 11     |
++--------+
+```
+
+**2. Удаление конкретных символов:**
+```sql
+SELECT TRIM('x' FROM 'xxhello worldxx');
+-- Результат:
++-------------+
+| hello world |
++-------------+
+```
 
 ---
 
