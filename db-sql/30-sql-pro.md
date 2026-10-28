@@ -5063,3 +5063,55 @@ Affected rows: 3
 
 ---
 
+### Задача: Контакты пользователей Stepik
+
+Таблица `user_social_providers` в нашей БД `stepik` содержит информацию о соцсетях пользователей и имеет следующие поля:
+- `user_id`: Составной первичный ключ; внешний ключ, ссылающийся на таблицу `users`.
+- `social_provider_id`: Составной первичный ключ; внешний ключ, ссылающийся на таблицу `social_providers`.
+- `connect_url`: URL соцсети пользователя, текст.
+
+Напишите запрос, который выведет id пользователей (поле `user_id`) и Российские соцсети пользователей (`vk` и `telegram`) через `'; '`.
+Результирующий столбец с контактами пользователя назвать `user_contact`.
+Необходимо сгруппировать пользователей по `user_id`.
+`https://` в начале адресов необходимо отбросить.
+
+#### Решение
+
+```sql
+SELECT
+    user_id,
+    GROUP_CONCAT(SUBSTRING_INDEX(connect_url, '//', -1) SEPARATOR '; ') AS user_contact
+FROM user_social_providers
+WHERE connect_url LIKE '%vk%' OR connect_url LIKE '%t.me%'
+GROUP BY user_id;
+```
+
+**Выходные данные:**
+
+```text
+Query result:
++---------+----------------------------+
+| user_id | user_contact               |
++---------+----------------------------+
+| 1       | vk.com/user1               |
+| 2       | t.me/user2                 |
+| 3       | vk.com/user3; t.me/user3   |
+| 4       | t.me/user4                 |
+| 5       | vk.com/user5; t.me/user5   |
+| 6       | vk.com/user6               |
+| 8       | vk.com/user8; t.me/user8   |
+| 9       | t.me/user9                 |
+| 10      | t.me/user10                |
+| 11      | vk.com/user11              |
+| 13      | vk.com/user13; t.me/user13 |
+| 16      | vk.com/user16; t.me/user16 |
+| 21      | vk.com/user21; t.me/user21 |
+| 22      | vk.com/user22              |
+| 23      | vk.com/user23; t.me/user23 |
+| 27      | t.me/user27                |
++---------+----------------------------+
+Affected rows: 16
+```
+
+---
+
