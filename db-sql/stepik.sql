@@ -68,6 +68,37 @@ CREATE TABLE certificates (
         REFERENCES courses (id)
 );
 
+DROP TABLE IF EXISTS social_providers;
+CREATE TABLE social_providers (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name TEXT NOT NULL,
+    logo_url TEXT NOT NULL
+);
+
+DROP TABLE IF EXISTS user_social_providers;
+CREATE TABLE user_social_providers (
+    user_id INT,
+    social_provider_id INT,
+    connect_url TEXT NOT NULL,
+    PRIMARY KEY (user_id , social_provider_id),
+    FOREIGN KEY (user_id)
+        REFERENCES users (id),
+    FOREIGN KEY (social_provider_id)
+        REFERENCES social_providers (id)
+);
+
+DROP TABLE IF EXISTS certificate_settings;
+CREATE TABLE certificate_settings (
+    course_id INT,
+    logo_url TEXT,
+    signature_url TEXT,
+    is_certificate_auto_issued BOOLEAN NOT NULL,
+    regular_threshold INT NOT NULL,
+    excellent_threshold INT NOT NULL,
+    PRIMARY KEY (course_id),
+    FOREIGN KEY (course_id) REFERENCES courses(id)
+);
+
 INSERT INTO users (full_name, details, join_date, avatar, is_active, knowledge, reputation, followers_count, days_without_break, days_without_break_max, solved_tasks)
 VALUES
 ('Петр Васильев', 'Разработчик игр', '2021-02-01', 'https://example.com/avatar4.jpg', true, 150, 75, 30, 8, 12, 45),
@@ -306,3 +337,184 @@ VALUES
 (29, 3, 85, '2022-03-15', 'https://example.com/certificate63.pdf'),
 (30, 4, 90, '2022-03-22', 'https://example.com/certificate64.pdf'),
 (30, 5, 80, '2022-03-29', 'https://example.com/certificate65.pdf');
+
+INSERT INTO social_providers (name, logo_url) VALUES
+('Facebook', 'https://example.com/facebook_logo.png'),
+('GitHub', 'https://example.com/github_logo.png'),
+('VK', 'https://example.com/vk_logo.png'),
+('Twitter', 'https://example.com/twitter_logo.png'),
+('Coursera', 'https://example.com/coursera_logo.png'),
+('edX', 'https://example.com/edx_logo.png'),
+('Instagram', 'https://example.com/instagram_logo.png'),
+('Skype', 'https://example.com/skype_logo.png'),
+('Telegram', 'https://example.com/telegram_logo.png'),
+('Website', 'https://example.com/website_logo.png'),
+('YouTube', 'https://example.com/youtube_logo.png');
+
+INSERT INTO user_social_providers (user_id, social_provider_id, connect_url) VALUES
+(1, 1, 'https://www.facebook.com/user1'),
+(1, 2, 'https://github.com/user1'),
+(1, 3, 'https://vk.com/user1'),
+(1, 4, 'https://twitter.com/user1'),
+(1, 5, 'https://www.coursera.org/user/user1'),
+(1, 6, 'https://courses.edx.org/u/user1'),
+(1, 7, 'https://www.instagram.com/user1'),
+
+(2, 8, 'skype:user2'),
+(2, 9, 'https://t.me/user2'),
+(2, 10, 'https://www.user2.com'),
+(2, 11, 'https://www.youtube.com/user2'),
+
+(3, 1, 'https://www.facebook.com/user3'),
+(3, 2, 'https://github.com/user3'),
+(3, 3, 'https://vk.com/user3'),
+(3, 4, 'https://twitter.com/user3'),
+(3, 9, 'https://t.me/user3'),
+(3, 10, 'https://www.user3.com'),
+(3, 11, 'https://www.youtube.com/user3'),
+
+(4, 1, 'https://www.facebook.com/user4'),
+(4, 2, 'https://github.com/user4'),
+(4, 7, 'https://www.instagram.com/user4'),
+(4, 8, 'skype:user4'),
+(4, 9, 'https://t.me/user4'),
+(4, 10, 'https://www.user4.com'),
+(4, 11, 'https://www.youtube.com/user4'),
+
+(5, 1, 'https://www.facebook.com/user5'),
+(5, 2, 'https://github.com/user5'),
+(5, 3, 'https://vk.com/user5'),
+(5, 4, 'https://twitter.com/user5'),
+(5, 5, 'https://www.coursera.org/user/user5'),
+(5, 6, 'https://courses.edx.org/u/user5'),
+(5, 7, 'https://www.instagram.com/user5'),
+(5, 8, 'skype:user5'),
+(5, 9, 'https://t.me/user5'),
+(5, 10, 'https://www.user5.com'),
+(5, 11, 'https://www.youtube.com/user5'),
+
+(6, 1, 'https://www.facebook.com/user6'),
+(6, 2, 'https://github.com/user6'),
+(6, 3, 'https://vk.com/user6'),
+(6, 4, 'https://twitter.com/user6'),
+(6, 5, 'https://www.coursera.org/user/user6'),
+(6, 6, 'https://courses.edx.org/u/user6'),
+
+(8, 1, 'https://www.facebook.com/user8'),
+(8, 2, 'https://github.com/user8'),
+(8, 3, 'https://vk.com/user8'),
+(8, 4, 'https://twitter.com/user8'),
+(8, 6, 'https://courses.edx.org/u/user8'),
+(8, 7, 'https://www.instagram.com/user8'),
+(8, 8, 'skype:user8'),
+(8, 9, 'https://t.me/user8'),
+(8, 10, 'https://www.user8.com'),
+(8, 11, 'https://www.youtube.com/user8'),
+
+(9, 1, 'https://www.facebook.com/user9'),
+(9, 2, 'https://github.com/user9'),
+(9, 8, 'skype:user9'),
+(9, 9, 'https://t.me/user9'),
+(9, 10, 'https://www.user9.com'),
+(9, 11, 'https://www.youtube.com/user9'),
+
+(10, 1, 'https://www.facebook.com/user10'),
+(10, 7, 'https://www.instagram.com/user10'),
+(10, 8, 'skype:user10'),
+(10, 9, 'https://t.me/user10'),
+(10, 10, 'https://www.user10.com'),
+(10, 11, 'https://www.youtube.com/user10'),
+
+(11, 1, 'https://www.facebook.com/user11'),
+(11, 2, 'https://github.com/user11'),
+(11, 3, 'https://vk.com/user11'),
+(11, 4, 'https://twitter.com/user11'),
+(11, 5, 'https://www.coursera.org/user/user11'),
+(11, 6, 'https://courses.edx.org/u/user11'),
+(11, 7, 'https://www.instagram.com/user11'),
+
+(12, 1, 'https://www.facebook.com/user12'),
+(12, 2, 'https://github.com/user12'),
+(12, 4, 'https://twitter.com/user12'),
+(12, 5, 'https://www.coursera.org/user/user12'),
+(12, 6, 'https://courses.edx.org/u/user12'),
+(12, 7, 'https://www.instagram.com/user12'),
+(12, 8, 'skype:user12'),
+(12, 10, 'https://www.user12.com'),
+(12, 11, 'https://www.youtube.com/user12'),
+
+(13, 1, 'https://www.facebook.com/user13'),
+(13, 2, 'https://github.com/user13'),
+(13, 3, 'https://vk.com/user13'),
+(13, 4, 'https://twitter.com/user13'),
+(13, 8, 'skype:user13'),
+(13, 9, 'https://t.me/user13'),
+(13, 10, 'https://www.user13.com'),
+(13, 11, 'https://www.youtube.com/user13'),
+
+(16, 1, 'https://www.facebook.com/user16'),
+(16, 2, 'https://github.com/user16'),
+(16, 3, 'https://vk.com/user16'),
+(16, 6, 'https://courses.edx.org/u/user16'),
+(16, 7, 'https://www.instagram.com/user16'),
+(16, 8, 'skype:user16'),
+(16, 9, 'https://t.me/user16'),
+(16, 10, 'https://www.user16.com'),
+(16, 11, 'https://www.youtube.com/user16'),
+
+(21, 3, 'https://vk.com/user21'),
+(21, 4, 'https://twitter.com/user21'),
+(21, 5, 'https://www.coursera.org/user/user21'),
+(21, 6, 'https://courses.edx.org/u/user21'),
+(21, 7, 'https://www.instagram.com/user21'),
+(21, 8, 'skype:user21'),
+(21, 9, 'https://t.me/user21'),
+(21, 10, 'https://www.user21.com'),
+(21, 11, 'https://www.youtube.com/user21'),
+
+(22, 1, 'https://www.facebook.com/user22'),
+(22, 2, 'https://github.com/user22'),
+(22, 3, 'https://vk.com/user22'),
+(22, 4, 'https://twitter.com/user22'),
+(22, 5, 'https://www.coursera.org/user/user22'),
+(22, 6, 'https://courses.edx.org/u/user22'),
+(22, 7, 'https://www.instagram.com/user22'),
+(22, 10, 'https://www.user22.com'),
+(22, 11, 'https://www.youtube.com/user22'),
+
+(23, 1, 'https://www.facebook.com/user23'),
+(23, 2, 'https://github.com/user23'),
+(23, 3, 'https://vk.com/user23'),
+(23, 4, 'https://twitter.com/user23'),
+(23, 5, 'https://www.coursera.org/user/user23'),
+(23, 6, 'https://courses.edx.org/u/user23'),
+(23, 7, 'https://www.instagram.com/user23'),
+(23, 8, 'skype:user23'),
+(23, 9, 'https://t.me/user23'),
+(23, 10, 'https://www.user23.com'),
+(23, 11, 'https://www.youtube.com/user23'),
+
+(27, 1, 'https://www.facebook.com/user27'),
+(27, 6, 'https://courses.edx.org/u/user27'),
+(27, 7, 'https://www.instagram.com/user27'),
+(27, 8, 'skype:user27'),
+(27, 9, 'https://t.me/user27'),
+(27, 10, 'https://www.user27.com'),
+(27, 11, 'https://www.youtube.com/user27'),
+
+(28, 1, 'https://www.facebook.com/user28');
+
+INSERT INTO certificate_settings (course_id, logo_url, signature_url, is_certificate_auto_issued, regular_threshold, excellent_threshold) VALUES
+(1, 'https://example.com/course1_logo.png', 'https://example.com/course1_signature.png', TRUE, 70, 90),
+(2, 'https://example.com/course2_logo.png', 'https://example.com/course2_signature.png', FALSE, 65, 85),
+(5, 'https://example.com/course5_logo.png', 'https://example.com/course5_signature.png', TRUE, 70, 90),
+(6, 'https://example.com/course6_logo.png', 'https://example.com/course6_signature.png', FALSE, 65, 85),
+(7, 'https://example.com/course7_logo.png', 'https://example.com/course7_signature.png', TRUE, 75, 95),
+(8, 'https://example.com/course8_logo.png', 'https://example.com/course8_signature.png', FALSE, 60, 80),
+(9, 'https://example.com/course9_logo.png', 'https://example.com/course9_signature.png', TRUE, 70, 90),
+(11, 'https://example.com/course11_logo.png', 'https://example.com/course11_signature.png', TRUE, 75, 95),
+(12, 'https://example.com/course12_logo.png', 'https://example.com/course12_signature.png', FALSE, 60, 80),
+(13, 'https://example.com/course13_logo.png', 'https://example.com/course13_signature.png', TRUE, 70, 90),
+(17, 'https://example.com/course17_logo.png', 'https://example.com/course17_signature.png', TRUE, 70, 90),
+(18, 'https://example.com/course18_logo.png', 'https://example.com/course18_signature.png', FALSE, 65, 85),
+(20, 'https://example.com/course20_logo.png', 'https://example.com/course20_signature.png', FALSE, 60, 80);
